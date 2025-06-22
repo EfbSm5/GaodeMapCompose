@@ -94,9 +94,11 @@ internal fun SmoothMoveScreen() {
             )
         }
         if (currentState.isMapLoaded) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Black.copy(alpha = 0.3F))) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Black.copy(alpha = 0.3F))
+            ) {
                 MapMenuButton(
                     modifier = Modifier.align(Alignment.Center),
                     text = if (currentState.isStart) "暂停" else "开始",

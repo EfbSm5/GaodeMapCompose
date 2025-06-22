@@ -20,25 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.melody.map.myapplication
+package com.melody.map.myapplication.activitys
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.melody.map.myapplication.ui.SmoothMoveScreen
+import com.melody.map.myapplication.ui.LocationTrackingScreen
 
 /**
- * SmoothMoveActivity
+ * LocationTrackingActivity
  * @author 被风吹过的夏天
  * @email developer_melody@163.com
  * @github: https://github.com/TheMelody/OmniMap
- * created 2022/10/12 14:15
+ * created 2022/10/09 14:11
  */
-class SmoothMoveActivity : ComponentActivity() {
+class LocationTrackingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SmoothMoveScreen()
+            LocationTrackingScreen()
         }
     }
 }

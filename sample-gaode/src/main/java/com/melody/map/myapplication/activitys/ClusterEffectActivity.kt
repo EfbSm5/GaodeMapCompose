@@ -20,25 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.melody.map.myapplication
+package com.melody.map.myapplication.activitys
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.melody.map.myapplication.ui.DragDropSelectPointScreen
+import com.melody.map.myapplication.ui.ClusterEffectScreen
 
 /**
- * DragDropSelectPointActivity
+ * ClusterEffectActivity
  * @author 被风吹过的夏天
  * @email developer_melody@163.com
  * @github: https://github.com/TheMelody/OmniMap
- * created 2022/10/09 14:12
+ * created 2022/10/22 14:54
  */
-class DragDropSelectPointActivity : ComponentActivity() {
+class ClusterEffectActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            DragDropSelectPointScreen()
+            ClusterEffectScreen()
         }
     }
 }

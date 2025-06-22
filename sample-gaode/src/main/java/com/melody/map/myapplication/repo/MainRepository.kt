@@ -23,20 +23,20 @@
 package com.melody.map.myapplication.repo
 
 import android.content.Intent
-import com.melody.map.myapplication.BasicFeatureActivity
-import com.melody.map.myapplication.ClusterEffectActivity
-import com.melody.map.myapplication.DragDropSelectPointActivity
-import com.melody.map.myapplication.LocationTrackingActivity
-import com.melody.map.myapplication.Map3dActivity
-import com.melody.map.myapplication.MarkerAnimationActivity
-import com.melody.map.myapplication.MovementTrackActivity
-import com.melody.map.myapplication.MultiPointOverlayActivity
-import com.melody.map.myapplication.OverlayActivity
 import com.melody.map.myapplication.R
-import com.melody.map.myapplication.RoutePlanActivity
 import com.melody.map.myapplication.SDKUtils
-import com.melody.map.myapplication.SmoothMoveActivity
 import com.melody.map.myapplication.StringUtils
+import com.melody.map.myapplication.activitys.BasicFeatureActivity
+import com.melody.map.myapplication.activitys.ClusterEffectActivity
+import com.melody.map.myapplication.activitys.DragDropSelectPointActivity
+import com.melody.map.myapplication.activitys.LocationTrackingActivity
+import com.melody.map.myapplication.activitys.Map3dActivity
+import com.melody.map.myapplication.activitys.MarkerAnimationActivity
+import com.melody.map.myapplication.activitys.MovementTrackActivity
+import com.melody.map.myapplication.activitys.MultiPointOverlayActivity
+import com.melody.map.myapplication.activitys.OverlayActivity
+import com.melody.map.myapplication.activitys.RoutePlanActivity
+import com.melody.map.myapplication.activitys.SmoothMoveActivity
 
 /**
  * MainRepository
@@ -51,8 +51,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_basic) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        BasicFeatureActivity::class.java
+                        SDKUtils.getApplicationContext(), BasicFeatureActivity::class.java
                     )
                 )
             }
@@ -64,8 +63,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_blue_location) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        LocationTrackingActivity::class.java
+                        SDKUtils.getApplicationContext(), LocationTrackingActivity::class.java
                     )
                 )
             }
@@ -73,8 +71,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_smooth_move) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        SmoothMoveActivity::class.java
+                        SDKUtils.getApplicationContext(), SmoothMoveActivity::class.java
                     )
                 )
             }
@@ -82,8 +79,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_drag_drop_select_point) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        DragDropSelectPointActivity::class.java
+                        SDKUtils.getApplicationContext(), DragDropSelectPointActivity::class.java
                     )
                 )
             }
@@ -95,8 +91,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_route_plan) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        RoutePlanActivity::class.java
+                        SDKUtils.getApplicationContext(), RoutePlanActivity::class.java
                     )
                 )
             }
@@ -104,8 +99,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_multipoint_click) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        MultiPointOverlayActivity::class.java
+                        SDKUtils.getApplicationContext(), MultiPointOverlayActivity::class.java
                     )
                 )
             }
@@ -113,8 +107,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_marker_animation) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        MarkerAnimationActivity::class.java
+                        SDKUtils.getApplicationContext(), MarkerAnimationActivity::class.java
                     )
                 )
             }
@@ -122,8 +115,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_movement_track) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        MovementTrackActivity::class.java
+                        SDKUtils.getApplicationContext(), MovementTrackActivity::class.java
                     )
                 )
             }
@@ -131,8 +123,7 @@ object MainRepository {
             StringUtils.getString(R.string.gd_map_main_feature_item_cluster_effect) -> {
                 startActivity(
                     Intent(
-                        SDKUtils.getApplicationContext(),
-                        ClusterEffectActivity::class.java
+                        SDKUtils.getApplicationContext(), ClusterEffectActivity::class.java
                     )
                 )
             }
@@ -143,7 +134,6 @@ object MainRepository {
         SDKUtils.getApplicationContext().startActivity(
             intent.apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-        )
+            })
     }
 }

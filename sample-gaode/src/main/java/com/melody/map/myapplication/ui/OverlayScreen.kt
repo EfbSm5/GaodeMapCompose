@@ -119,9 +119,11 @@ internal fun OverlayScreen() {
                 state = rememberMarkerState(position = currentState.circleCenter),
                 snippet = "头戴三叉束发紫金冠体挂西川红棉百花袍身披兽面吞头连环铠腰系勒甲玲珑狮蛮带手持方天画戟坐下嘶风赤兔马之吕小布是也"
             ) {
-                FlowRow(modifier = Modifier
-                    .width(120.dp)
-                    .wrapContentHeight()) {
+                FlowRow(
+                    modifier = Modifier
+                        .width(120.dp)
+                        .wrapContentHeight()
+                ) {
                     Text(it.snippet ?: "", color = Color.Red)
                     Image(
                         modifier = Modifier.size(16.dp),

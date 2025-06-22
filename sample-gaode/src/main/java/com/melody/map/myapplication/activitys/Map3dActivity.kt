@@ -20,26 +20,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.melody.map.myapplication
+package com.melody.map.myapplication.activitys
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.melody.map.myapplication.ui.BasicFeatureScreen
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import com.amap.api.maps.MapsInitializer
+import com.melody.map.gd_compose.GDMap
+import com.melody.map.gd_compose.poperties.MapUiSettings
 
 /**
- * BasicFeatureActivity
+ * Map3dActivity
  * @author 被风吹过的夏天
  * @email developer_melody@163.com
  * @github: https://github.com/TheMelody/OmniMap
- * created 2022/10/09 14:05
+ * created 2022/10/09 14:09
  */
-class BasicFeatureActivity : ComponentActivity() {
+class Map3dActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 开启3D地形开关
+        MapsInitializer.setTerrainEnable(true)
         super.onCreate(savedInstanceState)
         setContent {
-            BasicFeatureScreen()
+            Box(modifier = Modifier.fillMaxSize()) {
+                GDMap(
+                    modifier = Modifier.matchParentSize(),
+                    uiSettings = MapUiSettings(
+                        isZoomGesturesEnabled = true,
+                        isScrollGesturesEnabled = true,
+                        isRotateGesturesEnabled = true,
+                        isZoomEnabled = true,
+                        isTiltGesturesEnabled = true,
+                    )
+                )
+            }
         }
+    }
+
+    override fun onDestroy() {
+        // 恢复，防止其他页面的示例有问题
+        MapsInitializer.setTerrainEnable(false)
+        super.onDestroy()
     }
 }

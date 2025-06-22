@@ -55,11 +55,7 @@ private fun Context.openGaoDeMap(dstLat: Double, dstLon: Double, dstName: String
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         // 将功能Scheme以URI的方式传入data
         data = String.format(
-            "androidamap://route?" +
-                    "sourceApplication=%s" +
-                    "&sname=我的位置&dlat=%s" +
-                    "&dlon=%s" +
-                    "&dname=%s&dev=0&m=0&t=1",
+            "androidamap://route?" + "sourceApplication=%s" + "&sname=我的位置&dlat=%s" + "&dlon=%s" + "&dname=%s&dev=0&m=0&t=1",
             getAppName(packageName),
             dstLat,
             dstLon,
@@ -77,9 +73,7 @@ private fun Context.openBaiduMap(dstLat: Double, dstLon: Double) {
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val latLonArray = convertGTMapLatLonToBaidu(dstLat, dstLon)
         data = String.format(
-            "baidumap://map/direction?region=0" +
-                    "&destination=%s,%s" +
-                    "&mode=transit&src=andr.waimai.%s",
+            "baidumap://map/direction?region=0" + "&destination=%s,%s" + "&mode=transit&src=andr.waimai.%s",
             latLonArray.getOrNull(0) ?: 0.0,
             latLonArray.getOrNull(1) ?: 0.0,
             getAppName(packageName)
@@ -98,11 +92,7 @@ private fun Context.openTencentMap(dstLat: Double, dstLon: Double, dstName: Stri
     val intent = Intent(Intent.ACTION_VIEW).apply {
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         data = String.format(
-            "qqmap://map/routeplan?type=bus&from=我的位置&fromcoord=0,0" +
-                    "&to=%s" +
-                    "&tocoord=%s,%s" +
-                    "&policy=1" +
-                    "&referer=%s",
+            "qqmap://map/routeplan?type=bus&from=我的位置&fromcoord=0,0" + "&to=%s" + "&tocoord=%s,%s" + "&policy=1" + "&referer=%s",
             dstName,
             dstLat,
             dstLon,
@@ -124,8 +114,7 @@ private fun convertGTMapLatLonToBaidu(lat: Double, lon: Double): Array<Double> {
     val convertLon =
         BigDecimal(z * cos(theta) + 0.0065).setScale(6, RoundingMode.HALF_UP).toDouble()
 
-    val convertLat =
-        BigDecimal(z * sin(theta) + 0.006).setScale(6, RoundingMode.HALF_UP).toDouble()
+    val convertLat = BigDecimal(z * sin(theta) + 0.006).setScale(6, RoundingMode.HALF_UP).toDouble()
 
     return arrayOf(convertLat, convertLon)
 }

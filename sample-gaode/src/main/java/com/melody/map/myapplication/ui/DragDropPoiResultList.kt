@@ -42,13 +42,14 @@ import com.melody.map.myapplication.ui.components.EmptyResultText
 
 @Composable
 internal fun DragDropPoiResultList(
-    poiItemList: List<PoiItemV2>?,
-    onItemClick: (PoiItemV2) -> Unit
+    poiItemList: List<PoiItemV2>?, onItemClick: (PoiItemV2) -> Unit
 ) {
     val currentOnItemClick by rememberUpdatedState(newValue = onItemClick)
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0XFFFAFAFC))) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0XFFFAFAFC))
+    ) {
         poiItemList?.let { list ->
             if (list.isEmpty()) {
                 EmptyResultText(
@@ -59,8 +60,7 @@ internal fun DragDropPoiResultList(
                 )
             } else {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(15.dp)
+                    modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(15.dp)
                 ) {
                     items(items = list, key = { it.poiId }) {
                         MapPoiItem(

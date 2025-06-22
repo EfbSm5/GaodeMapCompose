@@ -72,27 +72,27 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Map3dActivity" android:exported="false"/>
+        <activity android:name=".activitys.Map3dActivity" android:exported="false"/>
 
-        <activity android:name=".BasicFeatureActivity" android:exported="false"/>
+        <activity android:name=".activitys.BasicFeatureActivity" android:exported="false"/>
 
-        <activity android:name=".DragDropSelectPointActivity" android:exported="false"/>
+        <activity android:name=".activitys.DragDropSelectPointActivity" android:exported="false"/>
 
-        <activity android:name=".SmoothMoveActivity" android:exported="false"/>
+        <activity android:name=".activitys.SmoothMoveActivity" android:exported="false"/>
 
-        <activity android:name=".LocationTrackingActivity" android:exported="false"/>
+        <activity android:name=".activitys.LocationTrackingActivity" android:exported="false"/>
 
-        <activity android:name=".OverlayActivity" android:exported="false"/>
+        <activity android:name=".activitys.OverlayActivity" android:exported="false"/>
 
-        <activity android:name=".RoutePlanActivity" android:exported="false"/>
+        <activity android:name=".activitys.RoutePlanActivity" android:exported="false"/>
 
-        <activity android:name=".MultiPointOverlayActivity" android:exported="false"/>
+        <activity android:name=".activitys.MultiPointOverlayActivity" android:exported="false"/>
 
-        <activity android:name=".MarkerAnimationActivity" android:exported="false"/>
+        <activity android:name=".activitys.MarkerAnimationActivity" android:exported="false"/>
 
-        <activity android:name=".MovementTrackActivity" android:exported="false"/>
+        <activity android:name=".activitys.MovementTrackActivity" android:exported="false"/>
 
-        <activity android:name=".ClusterEffectActivity" android:exported="false"/>
+        <activity android:name=".activitys.ClusterEffectActivity" android:exported="false"/>
 
     </application>
 

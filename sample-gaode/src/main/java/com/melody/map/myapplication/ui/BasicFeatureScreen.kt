@@ -98,9 +98,11 @@ internal fun BasicFeatureScreen() {
         )
 
         // 功能菜单选项
-        Column(modifier = Modifier
-            .align(Alignment.TopCenter)
-            .statusBarsPadding()) {
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .statusBarsPadding()
+        ) {
             BasicFeatureMenuBar(
                 modifier = Modifier
                     .fillMaxWidth()

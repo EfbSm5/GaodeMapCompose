@@ -30,6 +30,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import androidx.core.graphics.createBitmap
 import com.amap.api.maps.model.BitmapDescriptor
 import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.LatLng
@@ -39,7 +40,6 @@ import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.myapplication.R
 import com.melody.map.myapplication.SDKUtils
 import com.melody.map.myapplication.model.RegionItem
-import androidx.core.graphics.createBitmap
 
 /**
  * ClusterEffectRepository
