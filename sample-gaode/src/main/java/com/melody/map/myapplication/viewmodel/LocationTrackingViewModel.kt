@@ -33,12 +33,12 @@ import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps.LocationSource
 import com.amap.api.maps.LocationSource.OnLocationChangedListener
 import com.amap.api.maps.model.LatLng
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.LocationTrackingContract
-import com.melody.map.myapplication.repo.LocationTrackingRepository
+import com.melody.map.myapplication.openAppPermissionSettingPage
 import com.melody.map.myapplication.repo.DragDropSelectPointRepository
-import com.melody.sample.common.base.BaseViewModel
-import com.melody.sample.common.utils.openAppPermissionSettingPage
-import com.melody.sample.common.utils.safeLaunch
+import com.melody.map.myapplication.repo.LocationTrackingRepository
+import com.melody.map.myapplication.safeLaunch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 
@@ -70,10 +70,11 @@ class LocationTrackingViewModel :
     }
 
     override fun handleEvents(event: LocationTrackingContract.Event) {
-        when(event) {
+        when (event) {
             is LocationTrackingContract.Event.ShowOpenGPSDialog -> {
                 setState { copy(isShowOpenGPSDialog = true) }
             }
+
             is LocationTrackingContract.Event.HideOpenGPSDialog -> {
                 setState { copy(isShowOpenGPSDialog = false) }
             }
@@ -86,7 +87,7 @@ class LocationTrackingViewModel :
     fun checkGpsStatus() = asyncLaunch(Dispatchers.IO) {
         val isOpenGps = DragDropSelectPointRepository.checkGPSIsOpen()
         setState { copy(isOpenGps = isOpenGps) }
-        if(!isOpenGps) {
+        if (!isOpenGps) {
             setEvent(LocationTrackingContract.Event.ShowOpenGPSDialog)
         } else {
             hideOpenGPSDialog()
@@ -111,7 +112,7 @@ class LocationTrackingViewModel :
     }
 
     fun openGPSPermission(launcher: ManagedActivityResultLauncher<Intent, ActivityResult>) {
-        if(DragDropSelectPointRepository.checkGPSIsOpen()) {
+        if (DragDropSelectPointRepository.checkGPSIsOpen()) {
             // 已打开系统GPS，APP还没授权，跳权限页面
             openAppPermissionSettingPage()
         } else {
@@ -121,7 +122,7 @@ class LocationTrackingViewModel :
     }
 
     fun startMapLocation() {
-        LocationTrackingRepository.initAMapLocationClient(mLocationClient,this) { client, option->
+        LocationTrackingRepository.initAMapLocationClient(mLocationClient, this) { client, option ->
             mLocationClient = client
             mLocationOption = option
         }
@@ -129,8 +130,8 @@ class LocationTrackingViewModel :
 
     override fun onLocationChanged(amapLocation: AMapLocation?) {
         LocationTrackingRepository.handleLocationChange(amapLocation) { aMapLocation, msg ->
-            if(null != aMapLocation) {
-                val delayTime = if(null == currentState.locationLatLng) 100L else 0L
+            if (null != aMapLocation) {
+                val delayTime = if (null == currentState.locationLatLng) 100L else 0L
                 setState {
                     copy(locationLatLng = LatLng(aMapLocation.latitude, aMapLocation.longitude))
                 }
@@ -148,7 +149,7 @@ class LocationTrackingViewModel :
 
     override fun activate(listener: OnLocationChangedListener?) {
         mListener = listener
-        if(DragDropSelectPointRepository.checkGPSIsOpen() && currentState.grantLocationPermission) {
+        if (DragDropSelectPointRepository.checkGPSIsOpen() && currentState.grantLocationPermission) {
             startMapLocation()
         }
     }

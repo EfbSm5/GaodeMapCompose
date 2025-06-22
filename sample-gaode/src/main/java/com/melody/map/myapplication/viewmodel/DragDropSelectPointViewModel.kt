@@ -34,13 +34,13 @@ import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.core.PoiItemV2
 import com.amap.api.services.poisearch.PoiResultV2
 import com.amap.api.services.poisearch.PoiSearchV2
+import com.melody.map.myapplication.SensorEventHelper
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.DragDropSelectPointContract
+import com.melody.map.myapplication.model.ISensorDegreeListener
+import com.melody.map.myapplication.openAppPermissionSettingPage
 import com.melody.map.myapplication.repo.DragDropSelectPointRepository
-import com.melody.sample.common.base.BaseViewModel
-import com.melody.sample.common.model.ISensorDegreeListener
-import com.melody.sample.common.utils.SensorEventHelper
-import com.melody.sample.common.utils.openAppPermissionSettingPage
-import com.melody.sample.common.utils.safeLaunch
+import com.melody.map.myapplication.safeLaunch
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -57,7 +57,7 @@ class DragDropSelectPointViewModel :
     private var mLocationClientSingle: AMapLocationClient? = null
 
     // Poi查询条件类
-    private var mPoiItemQuery : PoiSearchV2.Query? = null
+    private var mPoiItemQuery: PoiSearchV2.Query? = null
     private var mPoiItemSearch: PoiSearchV2? = null
 
     private val sensorEventHelper = SensorEventHelper()
@@ -74,10 +74,11 @@ class DragDropSelectPointViewModel :
     }
 
     override fun handleEvents(event: DragDropSelectPointContract.Event) {
-        when(event) {
+        when (event) {
             is DragDropSelectPointContract.Event.ShowOpenGPSDialog -> {
                 setState { copy(isShowOpenGPSDialog = true) }
             }
+
             is DragDropSelectPointContract.Event.HideOpenGPSDialog -> {
                 setState { copy(isShowOpenGPSDialog = false) }
             }
@@ -92,7 +93,7 @@ class DragDropSelectPointViewModel :
     fun checkGpsStatus() = asyncLaunch(Dispatchers.IO) {
         val isOpenGps = DragDropSelectPointRepository.checkGPSIsOpen()
         setState { copy(isOpenGps = isOpenGps) }
-        if(!isOpenGps) {
+        if (!isOpenGps) {
             setEvent(DragDropSelectPointContract.Event.ShowOpenGPSDialog)
         } else {
             hideOpenGPSDialog()
@@ -104,7 +105,7 @@ class DragDropSelectPointViewModel :
     }
 
     fun startMapLocation() = asyncLaunch(Dispatchers.IO) {
-        if(currentState.isClickForceStartLocation) return@asyncLaunch
+        if (currentState.isClickForceStartLocation) return@asyncLaunch
         setState { copy(isClickForceStartLocation = true) }
         DragDropSelectPointRepository.restartLocation(
             locationClient = mLocationClientSingle,
@@ -132,7 +133,7 @@ class DragDropSelectPointViewModel :
     }
 
     fun openGPSPermission(launcher: ManagedActivityResultLauncher<Intent, ActivityResult>) {
-        if(DragDropSelectPointRepository.checkGPSIsOpen()) {
+        if (DragDropSelectPointRepository.checkGPSIsOpen()) {
             // 已打开系统GPS，APP还没授权，跳权限页面
             openAppPermissionSettingPage()
         } else {
@@ -152,14 +153,14 @@ class DragDropSelectPointViewModel :
 
     override fun onLocationChanged(location: AMapLocation?) {
         setState { copy(isClickForceStartLocation = false) }
-        if(null == location) {
+        if (null == location) {
             setEffect { DragDropSelectPointContract.Effect.Toast("定位失败,请检查定位权限和网络....") }
             return
         }
         val latitude = location.latitude
         val longitude = location.longitude
-        setState { copy(currentLocation = LatLng(latitude,longitude)) }
-        doSearchQueryPoi(LatLng(latitude,longitude))
+        setState { copy(currentLocation = LatLng(latitude, longitude)) }
+        doSearchQueryPoi(LatLng(latitude, longitude))
     }
 
     /**
@@ -168,7 +169,7 @@ class DragDropSelectPointViewModel :
     fun doSearchQueryPoi(latLon: LatLng) = asyncLaunch(Dispatchers.IO) {
         DragDropSelectPointRepository.doSearchQueryPoi(
             searchV2 = mPoiItemSearch,
-            moveLatLonPoint = LatLonPoint(latLon.latitude,latLon.longitude),
+            moveLatLonPoint = LatLonPoint(latLon.latitude, latLon.longitude),
             listener = this@DragDropSelectPointViewModel
         ) { a, b ->
             mPoiItemQuery = a

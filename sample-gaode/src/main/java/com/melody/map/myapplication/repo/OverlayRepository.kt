@@ -12,7 +12,7 @@ import com.amap.api.maps.model.PolygonHoleOptions
  * created 2022/10/27 15:12
  */
 object OverlayRepository {
-    fun initPolygonHolePointList(): List<LatLng>{
+    fun initPolygonHolePointList(): List<LatLng> {
         return listOf(
             LatLng(39.984864, 116.305756),
             LatLng(39.983618, 116.305848),
@@ -23,8 +23,9 @@ object OverlayRepository {
             LatLng(39.984864, 116.305756)
         )
     }
-    fun initPolygonHoleOptionList(): List<BaseHoleOptions>{
-        val options:MutableList<BaseHoleOptions> = mutableListOf()
+
+    fun initPolygonHoleOptionList(): List<BaseHoleOptions> {
+        val options: MutableList<BaseHoleOptions> = mutableListOf()
         val holeOptions = PolygonHoleOptions()
         holeOptions.addAll(initPolygonHolePointList())
         options.add(holeOptions)

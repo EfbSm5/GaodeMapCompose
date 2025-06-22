@@ -24,9 +24,9 @@ package com.melody.map.myapplication.viewmodel
 
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.LatLngBounds
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.OverlayContract
 import com.melody.map.myapplication.repo.OverlayRepository
-import com.melody.sample.common.base.BaseViewModel
 
 /**
  * OverlayViewModel
@@ -35,7 +35,8 @@ import com.melody.sample.common.base.BaseViewModel
  * @github: https://github.com/TheMelody/OmniMap
  * created 2022/10/27 14:58
  */
-class OverlayViewModel : BaseViewModel<OverlayContract.Event,OverlayContract.State,OverlayContract.Effect>() {
+class OverlayViewModel :
+    BaseViewModel<OverlayContract.Event, OverlayContract.State, OverlayContract.Effect>() {
 
     override fun createInitialState(): OverlayContract.State {
         return OverlayContract.State(
@@ -43,14 +44,25 @@ class OverlayViewModel : BaseViewModel<OverlayContract.Event,OverlayContract.Sta
             isShowTileOverlay = false,
             circleCenter = LatLng(39.903787, 116.426095),
             mapCenter = LatLng(39.91, 116.40),
-            wfjCenter = LatLng(39.936713,116.386475),
-            wfjLatLngBounds = LatLngBounds(LatLng(39.935029, 116.384377),LatLng(39.939577, 116.388331)),
+            wfjCenter = LatLng(39.936713, 116.386475),
+            wfjLatLngBounds = LatLngBounds(
+                LatLng(39.935029, 116.384377),
+                LatLng(39.939577, 116.388331)
+            ),
             arcStartPoint = LatLng(39.80, 116.09),
             arcPassPoint = LatLng(39.77, 116.28),
             arcEndPoint = LatLng(39.78, 116.46),
             infoWindowLatLng = LatLng(39.93, 116.13),
-            polylineList = listOf(LatLng(39.92, 116.34),LatLng(39.93, 116.34),LatLng(39.92, 116.35)),
-            polygonTriangleList = listOf(LatLng(39.88, 116.41), LatLng(39.87, 116.49), LatLng(39.82, 116.38)),
+            polylineList = listOf(
+                LatLng(39.92, 116.34),
+                LatLng(39.93, 116.34),
+                LatLng(39.92, 116.35)
+            ),
+            polygonTriangleList = listOf(
+                LatLng(39.88, 116.41),
+                LatLng(39.87, 116.49),
+                LatLng(39.82, 116.38)
+            ),
             polygonCornerLatLng = LatLng(39.982347, 116.305966),
             polygonHolePointList = OverlayRepository.initPolygonHolePointList(),
             polygonHoleOptionList = OverlayRepository.initPolygonHoleOptionList()
@@ -58,16 +70,19 @@ class OverlayViewModel : BaseViewModel<OverlayContract.Event,OverlayContract.Sta
     }
 
     override fun handleEvents(event: OverlayContract.Event) {
-        when(event) {
+        when (event) {
             is OverlayContract.Event.ShowWFJGroupOverlayEvent -> {
                 setState { copy(isShowWFJGroupOverlay = true) }
             }
+
             is OverlayContract.Event.HideWFJGroupOverlayEvent -> {
                 setState { copy(isShowWFJGroupOverlay = false) }
             }
+
             is OverlayContract.Event.ShowTileOverlayEvent -> {
                 setState { copy(isShowTileOverlay = true) }
             }
+
             is OverlayContract.Event.HideTileOverlayEvent -> {
                 setState { copy(isShowTileOverlay = false) }
             }
@@ -75,7 +90,7 @@ class OverlayViewModel : BaseViewModel<OverlayContract.Event,OverlayContract.Sta
     }
 
     fun toggleWFJGroupOverlay() {
-        if(currentState.isShowWFJGroupOverlay){
+        if (currentState.isShowWFJGroupOverlay) {
             setEvent(OverlayContract.Event.HideWFJGroupOverlayEvent)
         } else {
             setEvent(OverlayContract.Event.ShowWFJGroupOverlayEvent)
@@ -83,7 +98,7 @@ class OverlayViewModel : BaseViewModel<OverlayContract.Event,OverlayContract.Sta
     }
 
     fun toggleTileOverlay() {
-        if(currentState.isShowTileOverlay){
+        if (currentState.isShowTileOverlay) {
             setEvent(OverlayContract.Event.HideTileOverlayEvent)
         } else {
             setEvent(OverlayContract.Event.ShowTileOverlayEvent)

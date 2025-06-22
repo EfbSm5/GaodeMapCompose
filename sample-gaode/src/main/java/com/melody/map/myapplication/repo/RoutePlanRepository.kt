@@ -28,16 +28,21 @@ import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.LatLng
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
-import com.amap.api.services.route.*
+import com.amap.api.services.route.BusRouteResultV2
+import com.amap.api.services.route.DriveRouteResultV2
+import com.amap.api.services.route.RideRouteResultV2
+import com.amap.api.services.route.RouteSearchV2
+import com.amap.api.services.route.WalkRouteResultV2
 import com.melody.map.gd_compose.model.MapType
 import com.melody.map.gd_compose.poperties.MapProperties
 import com.melody.map.gd_compose.poperties.MapUiSettings
+import com.melody.map.myapplication.R
+import com.melody.map.myapplication.SDKUtils
 import com.melody.map.myapplication.model.BaseRouteDataState
 import com.melody.map.myapplication.model.BusRouteDataState
 import com.melody.map.myapplication.model.DrivingRouteDataState
 import com.melody.map.myapplication.model.RideRouteDataState
 import com.melody.map.myapplication.model.WalkRouteDataState
-import com.melody.sample.common.utils.SDKUtils
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**
@@ -49,7 +54,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
  */
 object RoutePlanRepository {
 
-    fun initMapUiSettings() : MapUiSettings {
+    fun initMapUiSettings(): MapUiSettings {
         return MapUiSettings(
             isZoomEnabled = true,
             isScrollGesturesEnabled = true,
@@ -58,7 +63,7 @@ object RoutePlanRepository {
         )
     }
 
-    fun initMapProperties() : MapProperties {
+    fun initMapProperties(): MapProperties {
         return MapProperties(mapType = MapType.NAVI, isTrafficEnabled = false)
     }
 
@@ -66,7 +71,7 @@ object RoutePlanRepository {
         return BitmapDescriptorFactory.fromBitmap(
             BitmapFactory.decodeResource(
                 SDKUtils.getApplicationContext().resources,
-                com.melody.ui.components.R.drawable.bus_start_icon
+                R.drawable.bus_start_icon
             )
         )
     }
@@ -75,7 +80,7 @@ object RoutePlanRepository {
         return BitmapDescriptorFactory.fromBitmap(
             BitmapFactory.decodeResource(
                 SDKUtils.getApplicationContext().resources,
-                com.melody.ui.components.R.drawable.bus_end_icon
+                R.drawable.bus_end_icon
             )
         )
     }
@@ -84,7 +89,7 @@ object RoutePlanRepository {
         return BitmapDescriptorFactory.fromBitmap(
             BitmapFactory.decodeResource(
                 SDKUtils.getApplicationContext().resources,
-                com.melody.ui.components.R.drawable.ic_map_start_guide_icon
+                R.drawable.ic_map_start_guide_icon
             )
         )
     }
@@ -93,19 +98,22 @@ object RoutePlanRepository {
         return BitmapDescriptorFactory.fromBitmap(
             BitmapFactory.decodeResource(
                 SDKUtils.getApplicationContext().resources,
-                com.melody.ui.components.R.drawable.ic_map_end_guide_icon
+                R.drawable.ic_map_end_guide_icon
             )
         )
     }
 
     fun getDrivingCustomTexture(isSelected: Boolean): BitmapDescriptor? {
         val result = kotlin.runCatching {
-            val assetsStream = SDKUtils.getApplicationContext().assets.open(if(isSelected) {
-                "ic_map_route_status_default_selected.png"
-            } else{
-                "ic_map_route_status_default.png"
-            })
-            val textureBitmap = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeStream(assetsStream))
+            val assetsStream = SDKUtils.getApplicationContext().assets.open(
+                if (isSelected) {
+                    "ic_map_route_status_default_selected.png"
+                } else {
+                    "ic_map_route_status_default.png"
+                }
+            )
+            val textureBitmap =
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeStream(assetsStream))
             assetsStream.close()
             textureBitmap
         }
@@ -114,31 +122,42 @@ object RoutePlanRepository {
 
     fun getBusCustomTexture(isSelected: Boolean): BitmapDescriptor? {
         val result = kotlin.runCatching {
-            val assetsStream = SDKUtils.getApplicationContext().assets.open(if(isSelected) {
-                "ic_map_route_status_green_selected.png"
-            } else{
-                "ic_map_route_status_green.png"
-            })
-            val textureBitmap = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeStream(assetsStream))
+            val assetsStream = SDKUtils.getApplicationContext().assets.open(
+                if (isSelected) {
+                    "ic_map_route_status_green_selected.png"
+                } else {
+                    "ic_map_route_status_green.png"
+                }
+            )
+            val textureBitmap =
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeStream(assetsStream))
             assetsStream.close()
             textureBitmap
         }
         return result.getOrNull()
     }
 
-    suspend fun getRoutePlanResult(queryType: Int,startPoint: LatLng, endPoint: LatLng, cityCode: String): BaseRouteDataState {
+    suspend fun getRoutePlanResult(
+        queryType: Int,
+        startPoint: LatLng,
+        endPoint: LatLng,
+        cityCode: String
+    ): BaseRouteDataState {
         return when (queryType) {
-            0 -> drivingRoutePlanSearch(startPoint,endPoint)
-            1 -> busRoutePlanSearch(startPoint,endPoint,cityCode)
-            2 -> walkRoutePlanSearch(startPoint,endPoint)
-            else -> rideRoutePlanSearch(startPoint,endPoint)
+            0 -> drivingRoutePlanSearch(startPoint, endPoint)
+            1 -> busRoutePlanSearch(startPoint, endPoint, cityCode)
+            2 -> walkRoutePlanSearch(startPoint, endPoint)
+            else -> rideRoutePlanSearch(startPoint, endPoint)
         }
     }
 
     /**
      * 驾车路径规划搜索
      */
-    private suspend fun drivingRoutePlanSearch(startPoint: LatLng, endPoint: LatLng): BaseRouteDataState {
+    private suspend fun drivingRoutePlanSearch(
+        startPoint: LatLng,
+        endPoint: LatLng
+    ): BaseRouteDataState {
         return suspendCancellableCoroutine { coroutine ->
             val newRouteSearch = RouteSearchV2(SDKUtils.getApplicationContext())
             newRouteSearch.setRouteSearchListener(object : RouteSearchV2.OnRouteSearchListener {
@@ -150,15 +169,23 @@ object RoutePlanRepository {
                                     Result.success(
                                         DrivingRouteDataState(
                                             routeWidth = 30F,
-                                            startPos = LatLng(result.startPos.latitude, result.startPos.longitude),
-                                            targetPos =LatLng(result.targetPos.latitude, result.targetPos.longitude),
+                                            startPos = LatLng(
+                                                result.startPos.latitude,
+                                                result.startPos.longitude
+                                            ),
+                                            targetPos = LatLng(
+                                                result.targetPos.latitude,
+                                                result.targetPos.longitude
+                                            ),
                                             startMarkerIcon = getStartMarkerIcon(),
                                             endMarkerIcon = getEndMarkerIcon(),
                                             startGuideIcon = getStartGuideIcon(),
                                             endGuideIcon = getEndGuideIcon(),
                                             drivePathV2List = result.paths,
                                             driveLineSelectedTexture = getDrivingCustomTexture(true),
-                                            driveLineUnSelectedTexture = getDrivingCustomTexture(false),
+                                            driveLineUnSelectedTexture = getDrivingCustomTexture(
+                                                false
+                                            ),
                                             throughIcon = null,
                                             throughPointList = emptyList()
                                         )
@@ -172,10 +199,13 @@ object RoutePlanRepository {
                         coroutine.resumeWith(Result.failure(NullPointerException(errorCode.toString())))
                     }
                 }
+
                 override fun onBusRouteSearched(p0: BusRouteResultV2?, p1: Int) {
                 }
+
                 override fun onWalkRouteSearched(p0: WalkRouteResultV2?, p1: Int) {
                 }
+
                 override fun onRideRouteSearched(p0: RideRouteResultV2?, p1: Int) {
                 }
             })
@@ -203,27 +233,40 @@ object RoutePlanRepository {
      * 公交车路径规划搜索:
      * http://a.amap.com/lbs/static/unzip/Android_Map_Doc/Search/com/amap/api/services/route/RouteSearchV2.BusRouteQuery.html
      */
-    private suspend fun busRoutePlanSearch(startPoint: LatLng, endPoint: LatLng, cityCode: String): BaseRouteDataState {
+    private suspend fun busRoutePlanSearch(
+        startPoint: LatLng,
+        endPoint: LatLng,
+        cityCode: String
+    ): BaseRouteDataState {
         return suspendCancellableCoroutine { coroutine ->
-            val newRouteSearch  = RouteSearchV2(SDKUtils.getApplicationContext())
+            val newRouteSearch = RouteSearchV2(SDKUtils.getApplicationContext())
             newRouteSearch.setRouteSearchListener(object : RouteSearchV2.OnRouteSearchListener {
                 override fun onBusRouteSearched(result: BusRouteResultV2?, errorCode: Int) {
-                    if(errorCode == AMapException.CODE_AMAP_SUCCESS) {
+                    if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
                         if (result?.paths != null) {
                             if (result.paths.isNotEmpty()) {
-                                coroutine.resumeWith(Result.success(
-                                    BusRouteDataState(
-                                    routeWidth = 30F,
-                                    startPos = LatLng(result.startPos.latitude, result.startPos.longitude),
-                                    targetPos =LatLng(result.targetPos.latitude, result.targetPos.longitude),
-                                    startMarkerIcon = getStartMarkerIcon(),
-                                    endMarkerIcon = getEndMarkerIcon(),
-                                    startGuideIcon = getStartGuideIcon(),
-                                    endGuideIcon = getEndGuideIcon(),
-                                    busLineSelectedTexture = getBusCustomTexture(true),
-                                    busLineUnSelectedTexture = getBusCustomTexture(false),
-                                    busPathV2List = result.paths
-                                )))
+                                coroutine.resumeWith(
+                                    Result.success(
+                                        BusRouteDataState(
+                                            routeWidth = 30F,
+                                            startPos = LatLng(
+                                                result.startPos.latitude,
+                                                result.startPos.longitude
+                                            ),
+                                            targetPos = LatLng(
+                                                result.targetPos.latitude,
+                                                result.targetPos.longitude
+                                            ),
+                                            startMarkerIcon = getStartMarkerIcon(),
+                                            endMarkerIcon = getEndMarkerIcon(),
+                                            startGuideIcon = getStartGuideIcon(),
+                                            endGuideIcon = getEndGuideIcon(),
+                                            busLineSelectedTexture = getBusCustomTexture(true),
+                                            busLineUnSelectedTexture = getBusCustomTexture(false),
+                                            busPathV2List = result.paths
+                                        )
+                                    )
+                                )
                                 return
                             }
                         }
@@ -232,10 +275,13 @@ object RoutePlanRepository {
                         coroutine.resumeWith(Result.failure(NullPointerException(errorCode.toString())))
                     }
                 }
+
                 override fun onDriveRouteSearched(p0: DriveRouteResultV2?, p1: Int) {
                 }
+
                 override fun onWalkRouteSearched(p0: WalkRouteResultV2?, p1: Int) {
                 }
+
                 override fun onRideRouteSearched(p0: RideRouteResultV2?, p1: Int) {
                 }
             })
@@ -247,7 +293,12 @@ object RoutePlanRepository {
             // 第二个参数：计算路径的模式。可选，默认为最快捷 RouteSearchV2.BusMode。
             // 第三个参数：城市区号/电话区号。此项不能为空。
             // 第四个参数：是否计算夜班车，默认为不计算。0：不计算，1：计算。可选。
-            val query = RouteSearchV2.BusRouteQuery(fromAndTo, RouteSearchV2.BusMode.BUS_DEFAULT, cityCode, 1)
+            val query = RouteSearchV2.BusRouteQuery(
+                fromAndTo,
+                RouteSearchV2.BusMode.BUS_DEFAULT,
+                cityCode,
+                1
+            )
             query.showFields = RouteSearchV2.ShowFields.ALL
             newRouteSearch.calculateBusRouteAsyn(query)
         }
@@ -256,29 +307,40 @@ object RoutePlanRepository {
     /**
      * 步行路径规划搜索
      */
-    private suspend fun walkRoutePlanSearch(startPoint: LatLng,endPoint: LatLng): BaseRouteDataState {
+    private suspend fun walkRoutePlanSearch(
+        startPoint: LatLng,
+        endPoint: LatLng
+    ): BaseRouteDataState {
         return suspendCancellableCoroutine { coroutine ->
             val newRouteSearch = RouteSearchV2(SDKUtils.getApplicationContext())
             newRouteSearch.setRouteSearchListener(object : RouteSearchV2.OnRouteSearchListener {
                 override fun onWalkRouteSearched(result: WalkRouteResultV2?, errorCode: Int) {
-                    if(errorCode == AMapException.CODE_AMAP_SUCCESS) {
+                    if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
                         if (result?.paths != null) {
                             if (result.paths.isNotEmpty()) {
-                                coroutine.resumeWith(Result.success(
-                                    WalkRouteDataState(
-                                        routeWidth = 30F,
-                                        startPos = LatLng(result.startPos.latitude, result.startPos.longitude),
-                                        targetPos = LatLng(result.targetPos.latitude, result.targetPos.longitude),
-                                        startMarkerIcon = getStartMarkerIcon(),
-                                        endMarkerIcon = getEndMarkerIcon(),
-                                        startGuideIcon = getStartGuideIcon(),
-                                        endGuideIcon = getEndGuideIcon(),
-                                        walkLineSelectedTexture = getBusCustomTexture(true),
-                                        walkLineUnSelectedTexture = getBusCustomTexture(false),
-                                        walkNodeIcon = null,
-                                        walkPathList = result.paths
+                                coroutine.resumeWith(
+                                    Result.success(
+                                        WalkRouteDataState(
+                                            routeWidth = 30F,
+                                            startPos = LatLng(
+                                                result.startPos.latitude,
+                                                result.startPos.longitude
+                                            ),
+                                            targetPos = LatLng(
+                                                result.targetPos.latitude,
+                                                result.targetPos.longitude
+                                            ),
+                                            startMarkerIcon = getStartMarkerIcon(),
+                                            endMarkerIcon = getEndMarkerIcon(),
+                                            startGuideIcon = getStartGuideIcon(),
+                                            endGuideIcon = getEndGuideIcon(),
+                                            walkLineSelectedTexture = getBusCustomTexture(true),
+                                            walkLineUnSelectedTexture = getBusCustomTexture(false),
+                                            walkNodeIcon = null,
+                                            walkPathList = result.paths
+                                        )
                                     )
-                                ))
+                                )
                                 return
                             }
                         }
@@ -287,10 +349,13 @@ object RoutePlanRepository {
                         coroutine.resumeWith(Result.failure(NullPointerException(errorCode.toString())))
                     }
                 }
+
                 override fun onDriveRouteSearched(p0: DriveRouteResultV2?, p1: Int) {
                 }
+
                 override fun onBusRouteSearched(p0: BusRouteResultV2?, p1: Int) {
                 }
+
                 override fun onRideRouteSearched(p0: RideRouteResultV2?, p1: Int) {
                 }
             })
@@ -307,30 +372,41 @@ object RoutePlanRepository {
     /**
      * 骑行路径规划搜索
      */
-    private suspend fun rideRoutePlanSearch(startPoint: LatLng, endPoint: LatLng): BaseRouteDataState {
+    private suspend fun rideRoutePlanSearch(
+        startPoint: LatLng,
+        endPoint: LatLng
+    ): BaseRouteDataState {
         return suspendCancellableCoroutine { coroutine ->
             val newRouteSearch = RouteSearchV2(SDKUtils.getApplicationContext())
             newRouteSearch.setRouteSearchListener(object : RouteSearchV2.OnRouteSearchListener {
                 override fun onRideRouteSearched(result: RideRouteResultV2?, errorCode: Int) {
-                    if(errorCode == AMapException.CODE_AMAP_SUCCESS) {
+                    if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
                         if (result?.paths != null) {
                             if (result.paths.isNotEmpty()) {
-                                coroutine.resumeWith(Result.success(
-                                    RideRouteDataState(
-                                        routeWidth = 30F,
-                                        startPos = LatLng(result.startPos.latitude, result.startPos.longitude),
-                                        targetPos = LatLng(result.targetPos.latitude, result.targetPos.longitude),
-                                        startMarkerIcon = getStartMarkerIcon(),
-                                        endMarkerIcon = getEndMarkerIcon(),
-                                        startGuideIcon = getStartGuideIcon(),
-                                        endGuideIcon = getEndGuideIcon(),
-                                        rideLineSelectedTexture = getBusCustomTexture(true),
-                                        rideLineUnSelectedTexture = getBusCustomTexture(false),
-                                        rideNodeIcon = null,
-                                        nodeVisible = false,
-                                        ridePathList = result.paths
+                                coroutine.resumeWith(
+                                    Result.success(
+                                        RideRouteDataState(
+                                            routeWidth = 30F,
+                                            startPos = LatLng(
+                                                result.startPos.latitude,
+                                                result.startPos.longitude
+                                            ),
+                                            targetPos = LatLng(
+                                                result.targetPos.latitude,
+                                                result.targetPos.longitude
+                                            ),
+                                            startMarkerIcon = getStartMarkerIcon(),
+                                            endMarkerIcon = getEndMarkerIcon(),
+                                            startGuideIcon = getStartGuideIcon(),
+                                            endGuideIcon = getEndGuideIcon(),
+                                            rideLineSelectedTexture = getBusCustomTexture(true),
+                                            rideLineUnSelectedTexture = getBusCustomTexture(false),
+                                            rideNodeIcon = null,
+                                            nodeVisible = false,
+                                            ridePathList = result.paths
+                                        )
                                     )
-                                ))
+                                )
                                 return
                             }
                         }
@@ -339,10 +415,13 @@ object RoutePlanRepository {
                         coroutine.resumeWith(Result.failure(NullPointerException(errorCode.toString())))
                     }
                 }
+
                 override fun onDriveRouteSearched(p0: DriveRouteResultV2?, p1: Int) {
                 }
+
                 override fun onBusRouteSearched(p0: BusRouteResultV2?, p1: Int) {
                 }
+
                 override fun onWalkRouteSearched(p0: WalkRouteResultV2?, p1: Int) {
                 }
             })

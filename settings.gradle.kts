@@ -30,14 +30,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "OmniMap-Compose"
-include(":gd-map-compose")
-include(":tencent-map-compose")
-include(":baidu-map-compose")
-// include(":huawei-map-compose")
 include(":sample-gaode")
-include(":sample-baidu")
-include(":sample-tencent")
-// include(":sample-huawei")
-include(":sample-google")
-include(":sample-ui-components")
-include(":sample-common")

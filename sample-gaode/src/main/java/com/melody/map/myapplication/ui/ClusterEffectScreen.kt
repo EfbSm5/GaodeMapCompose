@@ -32,13 +32,11 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.CameraPosition
 import com.melody.map.gd_compose.GDMap
 import com.melody.map.gd_compose.overlay.ClusterOverlay
 import com.melody.map.gd_compose.position.rememberCameraPositionState
+import com.melody.map.myapplication.ui.components.RedCenterLoading
 import com.melody.map.myapplication.viewmodel.ClusterEffectViewModel
-import com.melody.ui.components.RedCenterLoading
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 
 /**
@@ -59,12 +57,12 @@ internal fun ClusterEffectScreen() {
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()) {
         GDMap(
             modifier = Modifier.matchParentSize(),
             uiSettings = currentState.uiSettings,
             cameraPositionState = cameraPositionState
-        ){
+        ) {
             ClusterOverlay(
                 clusterRadius = 200,
                 clusterRenderer = viewModel,
@@ -75,7 +73,7 @@ internal fun ClusterEffectScreen() {
                 }
             )
         }
-        if(currentState.isLoading) {
+        if (currentState.isLoading) {
             RedCenterLoading()
         }
     }

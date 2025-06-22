@@ -30,10 +30,10 @@ import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.MyLocationStyle
-import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.gd_compose.poperties.MapProperties
-import com.melody.sample.common.utils.SDKUtils
-import com.melody.ui.components.R
+import com.melody.map.gd_compose.poperties.MapUiSettings
+import com.melody.map.myapplication.R
+import com.melody.map.myapplication.SDKUtils
 
 /**
  * LocationTrackingRepository
@@ -44,9 +44,12 @@ import com.melody.ui.components.R
  */
 object LocationTrackingRepository {
 
-    fun initMapProperties() : MapProperties{
+    fun initMapProperties(): MapProperties {
         // 注意：这里不要用BitmapDescriptorFactory.fromResource(你的新图)，不然会出现不生效的情况
-        val iconBitmap = BitmapFactory.decodeResource(SDKUtils.getApplicationContext().resources, R.drawable.ic_map_location_self)
+        val iconBitmap = BitmapFactory.decodeResource(
+            SDKUtils.getApplicationContext().resources,
+            R.drawable.ic_map_location_self
+        )
         val locationIcon = BitmapDescriptorFactory.fromBitmap(iconBitmap)
         return MapProperties(
             isMyLocationEnabled = true,
@@ -79,14 +82,15 @@ object LocationTrackingRepository {
         listener: AMapLocationListener,
         block: (AMapLocationClient, AMapLocationClientOption) -> Unit
     ) {
-        if(null == locationClient) {
+        if (null == locationClient) {
             val newLocationClient = AMapLocationClient(SDKUtils.getApplicationContext())
             //初始化定位参数
             val locationClientOption = AMapLocationClientOption()
             //设置定位回调监听
             newLocationClient.setLocationListener(listener)
             //设置为高精度定位模式
-            locationClientOption.locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+            locationClientOption.locationMode =
+                AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
             //设置定位参数
             newLocationClient.setLocationOption(locationClientOption)
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -100,13 +104,19 @@ object LocationTrackingRepository {
         }
     }
 
-    inline fun handleLocationChange(amapLocation: AMapLocation?, block: (AMapLocation?, String?) -> Unit) {
+    inline fun handleLocationChange(
+        amapLocation: AMapLocation?,
+        block: (AMapLocation?, String?) -> Unit
+    ) {
         if (amapLocation != null) {
             if (amapLocation.errorCode == 0) {
                 // 显示系统小蓝点
                 block.invoke(amapLocation, null)
             } else {
-                block.invoke(null, "定位失败," + amapLocation.errorCode + ": " + amapLocation.errorInfo)
+                block.invoke(
+                    null,
+                    "定位失败," + amapLocation.errorCode + ": " + amapLocation.errorInfo
+                )
             }
         }
     }

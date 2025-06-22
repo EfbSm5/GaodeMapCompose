@@ -50,7 +50,6 @@ import com.amap.api.maps.model.TileProvider
 import com.amap.api.maps.model.UrlTileProvider
 import com.google.accompanist.flowlayout.FlowRow
 import com.melody.map.gd_compose.GDMap
-import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.gd_compose.overlay.Arc
 import com.melody.map.gd_compose.overlay.Circle
 import com.melody.map.gd_compose.overlay.GroundOverlay
@@ -62,11 +61,12 @@ import com.melody.map.gd_compose.overlay.Polygon
 import com.melody.map.gd_compose.overlay.Polyline
 import com.melody.map.gd_compose.overlay.TileOverlay
 import com.melody.map.gd_compose.overlay.rememberMarkerState
+import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.gd_compose.position.rememberCameraPositionState
 import com.melody.map.myapplication.R
+import com.melody.map.myapplication.showToast
+import com.melody.map.myapplication.ui.components.MapMenuButton
 import com.melody.map.myapplication.viewmodel.OverlayViewModel
-import com.melody.sample.common.utils.showToast
-import com.melody.ui.components.MapMenuButton
 import java.net.URL
 
 /**
@@ -83,7 +83,7 @@ internal fun OverlayScreen() {
     val cameraPositionState = rememberCameraPositionState()
 
     LaunchedEffect(currentState.isShowWFJGroupOverlay) {
-        if(currentState.isShowWFJGroupOverlay) {
+        if (currentState.isShowWFJGroupOverlay) {
             cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(currentState.wfjCenter, 18f))
         } else {
             cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(currentState.mapCenter, 11f))
@@ -100,14 +100,15 @@ internal fun OverlayScreen() {
                 isZoomEnabled = true
             )
         ) {
-            MarkerInfoWindow(icon = BitmapDescriptorFactory.fromAsset("red_marker.png"),
+            MarkerInfoWindow(
+                icon = BitmapDescriptorFactory.fromAsset("red_marker.png"),
                 state = rememberMarkerState(position = currentState.infoWindowLatLng),
                 title = "我是一个卖报的小画家，嘎嘎香",
                 content = {
                     Card(modifier = Modifier.requiredSizeIn(maxWidth = 88.dp, minHeight = 66.dp)) {
                         Text(
                             modifier = Modifier.padding(4.dp),
-                            text = it.title?:""
+                            text = it.title ?: ""
                         )
                     }
                 }
@@ -118,7 +119,9 @@ internal fun OverlayScreen() {
                 state = rememberMarkerState(position = currentState.circleCenter),
                 snippet = "头戴三叉束发紫金冠体挂西川红棉百花袍身披兽面吞头连环铠腰系勒甲玲珑狮蛮带手持方天画戟坐下嘶风赤兔马之吕小布是也"
             ) {
-                FlowRow(modifier = Modifier.width(120.dp).wrapContentHeight()) {
+                FlowRow(modifier = Modifier
+                    .width(120.dp)
+                    .wrapContentHeight()) {
                     Text(it.snippet ?: "", color = Color.Red)
                     Image(
                         modifier = Modifier.size(16.dp),
@@ -175,7 +178,7 @@ internal fun OverlayScreen() {
                 strokeColor = Color.Red
             )
 
-            if(currentState.isShowWFJGroupOverlay) {
+            if (currentState.isShowWFJGroupOverlay) {
                 // 覆盖物
                 GroundOverlay(
                     position = GroundOverlayPosition.create(latLngBounds = currentState.wfjLatLngBounds),
@@ -184,7 +187,7 @@ internal fun OverlayScreen() {
                 )
             }
 
-            if(currentState.isShowTileOverlay) {
+            if (currentState.isShowTileOverlay) {
                 // 贴图，像热力图也是用TileOverlay渲染的
                 val tileProvider: TileProvider = object : UrlTileProvider(256, 256) {
                     override fun getTileUrl(x: Int, y: Int, zoom: Int): URL {
@@ -195,10 +198,12 @@ internal fun OverlayScreen() {
             }
         }
 
-        FlowRow(modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Black.copy(alpha = 0.3F))
-            .padding(10.dp)) {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Black.copy(alpha = 0.3F))
+                .padding(10.dp)
+        ) {
             MapMenuButton(
                 onClick = viewModel::toggleWFJGroupOverlay,
                 text = "在王府井显示：GroundOverlay"

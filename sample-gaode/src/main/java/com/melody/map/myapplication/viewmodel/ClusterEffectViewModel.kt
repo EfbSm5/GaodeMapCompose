@@ -26,9 +26,9 @@ import android.graphics.drawable.Drawable
 import com.amap.api.maps.model.LatLng
 import com.melody.map.gd_compose.model.ClusterItem
 import com.melody.map.gd_compose.model.ClusterRender
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.ClusterEffectContract
 import com.melody.map.myapplication.repo.ClusterEffectRepository
-import com.melody.sample.common.base.BaseViewModel
 
 /**
  * ClusterEffectViewModel
@@ -54,7 +54,7 @@ class ClusterEffectViewModel :
     }
 
     override fun handleEvents(event: ClusterEffectContract.Event) {
-        when(event) {
+        when (event) {
             is ClusterEffectContract.Event.ClusterItemClick -> {
                 val bounds = ClusterEffectRepository.getClusterItemClickLatLngBounds(event.list)
                 setState { copy(clusterBounds = bounds) }
@@ -72,7 +72,10 @@ class ClusterEffectViewModel :
     }
 
     override fun getDrawable(clusterNum: Int): Drawable {
-        return ClusterEffectRepository.getClusterRenderDrawable(clusterNum,mBackDrawables) { index,drawable->
+        return ClusterEffectRepository.getClusterRenderDrawable(
+            clusterNum,
+            mBackDrawables
+        ) { index, drawable ->
             mBackDrawables[index] = drawable
         }
     }

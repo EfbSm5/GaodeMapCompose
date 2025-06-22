@@ -48,7 +48,7 @@ class RideRouteDataState(
     val rideLineUnSelectedTexture: BitmapDescriptor?,
     val rideNodeIcon: BitmapDescriptor?,
     val ridePathList: List<RidePath>
-): BaseRouteDataState(
+) : BaseRouteDataState(
     routeWidth = routeWidth,
     startPos = startPos,
     targetPos = targetPos,

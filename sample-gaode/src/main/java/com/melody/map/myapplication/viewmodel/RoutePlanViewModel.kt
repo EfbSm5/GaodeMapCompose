@@ -23,9 +23,9 @@
 package com.melody.map.myapplication.viewmodel
 
 import com.amap.api.maps.model.LatLng
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.RoutePlanContract
 import com.melody.map.myapplication.repo.RoutePlanRepository
-import com.melody.sample.common.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -36,7 +36,7 @@ import kotlinx.coroutines.Dispatchers
  * created 2022/10/14 15:02
  */
 class RoutePlanViewModel :
-    BaseViewModel<RoutePlanContract.Event, RoutePlanContract.State, RoutePlanContract.Effect>(){
+    BaseViewModel<RoutePlanContract.Event, RoutePlanContract.State, RoutePlanContract.Effect>() {
 
     override fun createInitialState(): RoutePlanContract.State {
         return RoutePlanContract.State(
@@ -50,10 +50,11 @@ class RoutePlanViewModel :
     }
 
     override fun handleEvents(event: RoutePlanContract.Event) {
-        when(event) {
+        when (event) {
             is RoutePlanContract.Event.RoadTrafficClick -> {
                 setState { copy(mapProperties = mapProperties.copy(isTrafficEnabled = !mapProperties.isTrafficEnabled)) }
             }
+
             is RoutePlanContract.Event.QueryRoutePlan -> {
                 setState { copy(isLoading = true, dataState = null) }
                 asyncLaunch(Dispatchers.IO) {
@@ -66,7 +67,7 @@ class RoutePlanViewModel :
                             cityCode = "10"
                         )
                     }
-                    if(result.isSuccess) {
+                    if (result.isSuccess) {
                         setState { copy(isLoading = false, dataState = result.getOrNull()) }
                     } else {
                         setState { copy(isLoading = false) }

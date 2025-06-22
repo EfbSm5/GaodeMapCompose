@@ -36,10 +36,10 @@ import com.melody.map.gd_compose.GDMap
 import com.melody.map.gd_compose.position.rememberCameraPositionState
 import com.melody.map.myapplication.contract.LocationTrackingContract
 import com.melody.map.myapplication.dialog.ShowOpenGPSDialog
+import com.melody.map.myapplication.launcher.handlerGPSLauncher
+import com.melody.map.myapplication.showToast
+import com.melody.map.myapplication.ui.components.requestMultiplePermission
 import com.melody.map.myapplication.viewmodel.LocationTrackingViewModel
-import com.melody.sample.common.launcher.handlerGPSLauncher
-import com.melody.sample.common.utils.requestMultiplePermission
-import com.melody.sample.common.utils.showToast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
@@ -61,7 +61,7 @@ internal fun LocationTrackingScreen() {
     }
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.onEach {
-            if(it is LocationTrackingContract.Effect.Toast) {
+            if (it is LocationTrackingContract.Effect.Toast) {
                 showToast(it.msg)
             }
         }.collect()
@@ -85,12 +85,12 @@ internal fun LocationTrackingScreen() {
     }
 
     LaunchedEffect(currentState.locationLatLng) {
-        if(null == currentState.locationLatLng) return@LaunchedEffect
+        if (null == currentState.locationLatLng) return@LaunchedEffect
         cameraPosition.move(CameraUpdateFactory.newLatLng(currentState.locationLatLng))
     }
 
     LaunchedEffect(currentState.isOpenGps, reqGPSPermission.allPermissionsGranted) {
-        if(currentState.isOpenGps == true) {
+        if (currentState.isOpenGps == true) {
             if (!reqGPSPermission.allPermissionsGranted) {
                 reqGPSPermission.launchMultiplePermissionRequest()
             } else {
@@ -99,7 +99,7 @@ internal fun LocationTrackingScreen() {
         }
     }
 
-    if(currentState.isShowOpenGPSDialog) {
+    if (currentState.isShowOpenGPSDialog) {
         ShowOpenGPSDialog(
             onDismiss = viewModel::hideOpenGPSDialog,
             onPositiveClick = {

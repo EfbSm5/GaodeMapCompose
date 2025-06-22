@@ -23,9 +23,20 @@
 package com.melody.map.myapplication.repo
 
 import android.content.Intent
-import com.melody.map.myapplication.*
-import com.melody.sample.common.utils.SDKUtils
-import com.melody.sample.common.utils.StringUtils
+import com.melody.map.myapplication.BasicFeatureActivity
+import com.melody.map.myapplication.ClusterEffectActivity
+import com.melody.map.myapplication.DragDropSelectPointActivity
+import com.melody.map.myapplication.LocationTrackingActivity
+import com.melody.map.myapplication.Map3dActivity
+import com.melody.map.myapplication.MarkerAnimationActivity
+import com.melody.map.myapplication.MovementTrackActivity
+import com.melody.map.myapplication.MultiPointOverlayActivity
+import com.melody.map.myapplication.OverlayActivity
+import com.melody.map.myapplication.R
+import com.melody.map.myapplication.RoutePlanActivity
+import com.melody.map.myapplication.SDKUtils
+import com.melody.map.myapplication.SmoothMoveActivity
+import com.melody.map.myapplication.StringUtils
 
 /**
  * MainRepository
@@ -36,39 +47,94 @@ import com.melody.sample.common.utils.StringUtils
  */
 object MainRepository {
     fun handleMainFeatureItemClick(item: String) {
-        when(item) {
+        when (item) {
             StringUtils.getString(R.string.gd_map_main_feature_item_basic) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),BasicFeatureActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        BasicFeatureActivity::class.java
+                    )
+                )
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_overlay) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),OverlayActivity::class.java))
+                startActivity(Intent(SDKUtils.getApplicationContext(), OverlayActivity::class.java))
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_blue_location) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),LocationTrackingActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        LocationTrackingActivity::class.java
+                    )
+                )
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_smooth_move) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),SmoothMoveActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        SmoothMoveActivity::class.java
+                    )
+                )
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_drag_drop_select_point) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),DragDropSelectPointActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        DragDropSelectPointActivity::class.java
+                    )
+                )
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_3dmap) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),Map3dActivity::class.java))
+                startActivity(Intent(SDKUtils.getApplicationContext(), Map3dActivity::class.java))
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_route_plan) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),RoutePlanActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        RoutePlanActivity::class.java
+                    )
+                )
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_multipoint_click) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),MultiPointOverlayActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        MultiPointOverlayActivity::class.java
+                    )
+                )
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_marker_animation) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),MarkerAnimationActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        MarkerAnimationActivity::class.java
+                    )
+                )
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_movement_track) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),MovementTrackActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        MovementTrackActivity::class.java
+                    )
+                )
             }
+
             StringUtils.getString(R.string.gd_map_main_feature_item_cluster_effect) -> {
-                startActivity(Intent(SDKUtils.getApplicationContext(),ClusterEffectActivity::class.java))
+                startActivity(
+                    Intent(
+                        SDKUtils.getApplicationContext(),
+                        ClusterEffectActivity::class.java
+                    )
+                )
             }
         }
     }

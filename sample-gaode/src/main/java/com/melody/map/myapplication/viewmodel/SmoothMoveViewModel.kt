@@ -22,9 +22,9 @@
 
 package com.melody.map.myapplication.viewmodel
 
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.SmoothMoveContract
 import com.melody.map.myapplication.repo.SmoothMoveRepository
-import com.melody.sample.common.base.BaseViewModel
 
 /**
  * SmoothMoveViewModel
@@ -33,7 +33,8 @@ import com.melody.sample.common.base.BaseViewModel
  * @github: https://github.com/TheMelody/OmniMap
  * created 2022/10/12 14:18
  */
-class SmoothMoveViewModel : BaseViewModel<SmoothMoveContract.Event,SmoothMoveContract.State,SmoothMoveContract.Effect>() {
+class SmoothMoveViewModel :
+    BaseViewModel<SmoothMoveContract.Event, SmoothMoveContract.State, SmoothMoveContract.Effect>() {
     override fun createInitialState(): SmoothMoveContract.State {
         return SmoothMoveContract.State(
             isStart = false,
@@ -48,7 +49,7 @@ class SmoothMoveViewModel : BaseViewModel<SmoothMoveContract.Event,SmoothMoveCon
     }
 
     override fun handleEvents(event: SmoothMoveContract.Event) {
-        when(event) {
+        when (event) {
             is SmoothMoveContract.Event.PlayPauseEvent -> {
                 setState { copy(isStart = !isStart) }
             }

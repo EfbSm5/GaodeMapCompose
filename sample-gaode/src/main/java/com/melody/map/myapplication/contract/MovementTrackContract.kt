@@ -25,9 +25,9 @@ package com.melody.map.myapplication.contract
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.LatLngBounds
 import com.melody.map.gd_compose.poperties.MapUiSettings
-import com.melody.sample.common.state.IUiEffect
-import com.melody.sample.common.state.IUiEvent
-import com.melody.sample.common.state.IUiState
+import com.melody.map.myapplication.state.IUiEffect
+import com.melody.map.myapplication.state.IUiEvent
+import com.melody.map.myapplication.state.IUiState
 
 /**
  * MovementTrackContract
@@ -39,7 +39,7 @@ import com.melody.sample.common.state.IUiState
 class MovementTrackContract {
     sealed class Event : IUiEvent
 
-    data class State (
+    data class State(
         val isLoading: Boolean,
         val uiSettings: MapUiSettings,
         val latLngList: List<LatLng>,

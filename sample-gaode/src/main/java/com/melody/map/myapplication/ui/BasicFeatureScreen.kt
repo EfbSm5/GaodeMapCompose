@@ -23,7 +23,11 @@
 package com.melody.map.myapplication.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -41,10 +45,10 @@ import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.LatLngBounds
 import com.melody.map.gd_compose.GDMap
 import com.melody.map.gd_compose.model.MapType
-import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.gd_compose.poperties.MapProperties
-import com.melody.sample.common.model.ImmutableListWrapper
-import com.melody.ui.components.BasicFeatureMenuBar
+import com.melody.map.gd_compose.poperties.MapUiSettings
+import com.melody.map.myapplication.model.ImmutableListWrapper
+import com.melody.map.myapplication.ui.components.BasicFeatureMenuBar
 
 /**
  * BasicFeatureScreen
@@ -60,27 +64,29 @@ internal fun BasicFeatureScreen() {
     var mapProperties by remember { mutableStateOf(MapProperties()) }
 
     val menuList by remember {
-        mutableStateOf(ImmutableListWrapper(
-            listOf(
-                "白昼地图",
-                "卫星图",
-                "导航地图",
-                "夜景地图",
-                "3D楼块效果",
-                "地图文字标注",
-                "实时交通状况开关",
-                "地图语言切换",
-                "显示室内地图开关",
-                "设置地图显示范围",
-                "旋转手势开关",
-                "拖拽手势开关",
-                "倾斜手势开关",
-                "缩放手势开关",
-                "缩放按钮开关",
-                "指南针控件开关",
-                "比例尺控件开关"
+        mutableStateOf(
+            ImmutableListWrapper(
+                listOf(
+                    "白昼地图",
+                    "卫星图",
+                    "导航地图",
+                    "夜景地图",
+                    "3D楼块效果",
+                    "地图文字标注",
+                    "实时交通状况开关",
+                    "地图语言切换",
+                    "显示室内地图开关",
+                    "设置地图显示范围",
+                    "旋转手势开关",
+                    "拖拽手势开关",
+                    "倾斜手势开关",
+                    "缩放手势开关",
+                    "缩放按钮开关",
+                    "指南针控件开关",
+                    "比例尺控件开关"
+                )
             )
-        ))
+        )
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -92,23 +98,27 @@ internal fun BasicFeatureScreen() {
         )
 
         // 功能菜单选项
-        Column(modifier = Modifier.align(Alignment.TopCenter).statusBarsPadding()) {
+        Column(modifier = Modifier
+            .align(Alignment.TopCenter)
+            .statusBarsPadding()) {
             BasicFeatureMenuBar(
-                modifier = Modifier.fillMaxWidth().background(color = Color.Black.copy(alpha = 0.3F)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.Black.copy(alpha = 0.3F)),
                 listWrapper = menuList,
                 onStatusLabel = {
                     Text(
                         text = when (it) {
-                            "白昼地图"-> mapProperties.mapType == MapType.NORMAL
-                            "卫星图"-> mapProperties.mapType == MapType.SATELLITE
-                            "导航地图"-> mapProperties.mapType == MapType.NAVI
-                            "夜景地图"-> mapProperties.mapType == MapType.NIGHT
-                            "3D楼块效果"-> mapProperties.isShowBuildings
-                            "地图文字标注"-> mapProperties.isShowMapLabels
+                            "白昼地图" -> mapProperties.mapType == MapType.NORMAL
+                            "卫星图" -> mapProperties.mapType == MapType.SATELLITE
+                            "导航地图" -> mapProperties.mapType == MapType.NAVI
+                            "夜景地图" -> mapProperties.mapType == MapType.NIGHT
+                            "3D楼块效果" -> mapProperties.isShowBuildings
+                            "地图文字标注" -> mapProperties.isShowMapLabels
                             "实时交通状况开关" -> mapProperties.isTrafficEnabled
                             "地图语言切换" -> mapProperties.language
                             "显示室内地图开关" -> mapProperties.isIndoorEnabled
-                            "设置地图显示范围" -> if(mapProperties.mapShowLatLngBounds == null) null else "王府井区域内"
+                            "设置地图显示范围" -> if (mapProperties.mapShowLatLngBounds == null) null else "王府井区域内"
                             "旋转手势开关" -> uiSettings.isRotateGesturesEnabled
                             "拖拽手势开关" -> uiSettings.isScrollGesturesEnabled
                             "倾斜手势开关" -> uiSettings.isTiltGesturesEnabled
@@ -130,35 +140,49 @@ internal fun BasicFeatureScreen() {
                 },
                 onItemClick = {
                     when (it) {
-                        "白昼地图"-> {
+                        "白昼地图" -> {
                             mapProperties = mapProperties.copy(mapType = MapType.NORMAL)
                         }
-                        "卫星图"-> {
+
+                        "卫星图" -> {
                             mapProperties = mapProperties.copy(mapType = MapType.SATELLITE)
                         }
-                        "导航地图"-> {
+
+                        "导航地图" -> {
                             mapProperties = mapProperties.copy(mapType = MapType.NAVI)
                         }
-                        "夜景地图"-> {
+
+                        "夜景地图" -> {
                             mapProperties = mapProperties.copy(mapType = MapType.NIGHT)
                         }
+
                         "3D楼块效果" -> {
-                            mapProperties = mapProperties.copy(isShowBuildings = !mapProperties.isShowBuildings)
+                            mapProperties =
+                                mapProperties.copy(isShowBuildings = !mapProperties.isShowBuildings)
                         }
+
                         "地图文字标注" -> {
-                            mapProperties = mapProperties.copy(isShowMapLabels = !mapProperties.isShowMapLabels)
+                            mapProperties =
+                                mapProperties.copy(isShowMapLabels = !mapProperties.isShowMapLabels)
                         }
-                        "实时交通状况开关"-> {
-                            mapProperties = mapProperties.copy(isTrafficEnabled = !mapProperties.isTrafficEnabled)
+
+                        "实时交通状况开关" -> {
+                            mapProperties =
+                                mapProperties.copy(isTrafficEnabled = !mapProperties.isTrafficEnabled)
                         }
-                        "地图语言切换"-> {
-                            mapProperties = mapProperties.copy(language = if(mapProperties.language == AMap.CHINESE) AMap.ENGLISH else AMap.CHINESE)
+
+                        "地图语言切换" -> {
+                            mapProperties =
+                                mapProperties.copy(language = if (mapProperties.language == AMap.CHINESE) AMap.ENGLISH else AMap.CHINESE)
                         }
-                        "显示室内地图开关"-> {
-                            mapProperties = mapProperties.copy(isIndoorEnabled = !mapProperties.isIndoorEnabled)
+
+                        "显示室内地图开关" -> {
+                            mapProperties =
+                                mapProperties.copy(isIndoorEnabled = !mapProperties.isIndoorEnabled)
                         }
-                        "设置地图显示范围"-> {
-                            if(mapProperties.mapShowLatLngBounds == null) {
+
+                        "设置地图显示范围" -> {
+                            if (mapProperties.mapShowLatLngBounds == null) {
                                 // 设置地图只显示王府井这个区域的地图范围
                                 mapProperties = mapProperties.copy(
                                     mapShowLatLngBounds = LatLngBounds(
@@ -169,26 +193,39 @@ internal fun BasicFeatureScreen() {
                                 mapProperties = mapProperties.copy(mapShowLatLngBounds = null)
                             }
                         }
-                        "旋转手势开关"-> {
-                            uiSettings = uiSettings.copy(isRotateGesturesEnabled = !uiSettings.isRotateGesturesEnabled)
+
+                        "旋转手势开关" -> {
+                            uiSettings =
+                                uiSettings.copy(isRotateGesturesEnabled = !uiSettings.isRotateGesturesEnabled)
                         }
-                        "拖拽手势开关"-> {
-                            uiSettings = uiSettings.copy(isScrollGesturesEnabled = !uiSettings.isScrollGesturesEnabled)
+
+                        "拖拽手势开关" -> {
+                            uiSettings =
+                                uiSettings.copy(isScrollGesturesEnabled = !uiSettings.isScrollGesturesEnabled)
                         }
-                        "倾斜手势开关"-> {
-                            uiSettings = uiSettings.copy(isTiltGesturesEnabled = !uiSettings.isTiltGesturesEnabled)
+
+                        "倾斜手势开关" -> {
+                            uiSettings =
+                                uiSettings.copy(isTiltGesturesEnabled = !uiSettings.isTiltGesturesEnabled)
                         }
-                        "缩放手势开关"-> {
-                            uiSettings = uiSettings.copy(isZoomGesturesEnabled = !uiSettings.isZoomGesturesEnabled)
+
+                        "缩放手势开关" -> {
+                            uiSettings =
+                                uiSettings.copy(isZoomGesturesEnabled = !uiSettings.isZoomGesturesEnabled)
                         }
-                        "缩放按钮开关"-> {
+
+                        "缩放按钮开关" -> {
                             uiSettings = uiSettings.copy(isZoomEnabled = !uiSettings.isZoomEnabled)
                         }
-                        "指南针控件开关"-> {
-                            uiSettings = uiSettings.copy(isCompassEnabled = !uiSettings.isCompassEnabled)
+
+                        "指南针控件开关" -> {
+                            uiSettings =
+                                uiSettings.copy(isCompassEnabled = !uiSettings.isCompassEnabled)
                         }
-                        "比例尺控件开关"-> {
-                            uiSettings = uiSettings.copy(isScaleControlsEnabled = !uiSettings.isScaleControlsEnabled)
+
+                        "比例尺控件开关" -> {
+                            uiSettings =
+                                uiSettings.copy(isScaleControlsEnabled = !uiSettings.isScaleControlsEnabled)
                         }
                     }
                 }

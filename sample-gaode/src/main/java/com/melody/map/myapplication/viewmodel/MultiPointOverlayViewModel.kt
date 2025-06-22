@@ -23,9 +23,9 @@
 package com.melody.map.myapplication.viewmodel
 
 import com.amap.api.maps.model.MultiPointItem
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.MultiPointOverlayContract
 import com.melody.map.myapplication.repo.MultiPointOverlayRepository
-import com.melody.sample.common.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -48,7 +48,7 @@ class MultiPointOverlayViewModel :
     }
 
     override fun handleEvents(event: MultiPointOverlayContract.Event) {
-        when(event) {
+        when (event) {
             is MultiPointOverlayContract.Event.MultiPointClick -> {
                 setState { copy(clickPointLatLng = event.pointItem.latLng) }
             }

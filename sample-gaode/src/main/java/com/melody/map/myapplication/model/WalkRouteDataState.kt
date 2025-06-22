@@ -47,7 +47,7 @@ class WalkRouteDataState(
     val walkLineUnSelectedTexture: BitmapDescriptor?,
     val walkNodeIcon: BitmapDescriptor?,
     val walkPathList: List<WalkPath>
-): BaseRouteDataState(
+) : BaseRouteDataState(
     routeWidth = routeWidth,
     startPos = startPos,
     targetPos = targetPos,

@@ -24,7 +24,9 @@ package com.melody.map.myapplication.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.amap.api.maps.model.CameraPosition
@@ -48,7 +50,7 @@ internal fun MarkerAnimationScreen() {
     val viewModel: MarkerAnimViewModel = viewModel()
     val currentState by viewModel.uiState.collectAsState()
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition(currentState.centerLatLng, 10F,0F,0F)
+        position = CameraPosition(currentState.centerLatLng, 10F, 0F, 0F)
     }
     Box(modifier = Modifier.fillMaxSize()) {
         GDMap(

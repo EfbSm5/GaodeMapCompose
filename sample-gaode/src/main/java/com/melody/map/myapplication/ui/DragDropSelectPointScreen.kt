@@ -40,19 +40,19 @@ import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.melody.map.gd_compose.GDMap
-import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.gd_compose.overlay.Marker
 import com.melody.map.gd_compose.overlay.rememberMarkerState
+import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.gd_compose.position.rememberCameraPositionState
 import com.melody.map.myapplication.R
 import com.melody.map.myapplication.contract.DragDropSelectPointContract
 import com.melody.map.myapplication.dialog.ShowOpenGPSDialog
+import com.melody.map.myapplication.launcher.handlerGPSLauncher
+import com.melody.map.myapplication.showToast
+import com.melody.map.myapplication.ui.components.ForceStartLocationButton
+import com.melody.map.myapplication.ui.components.UIMarkerInScreenCenter
+import com.melody.map.myapplication.ui.components.requestMultiplePermission
 import com.melody.map.myapplication.viewmodel.DragDropSelectPointViewModel
-import com.melody.sample.common.launcher.handlerGPSLauncher
-import com.melody.sample.common.utils.requestMultiplePermission
-import com.melody.sample.common.utils.showToast
-import com.melody.ui.components.ForceStartLocationButton
-import com.melody.ui.components.UIMarkerInScreenCenter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
@@ -66,8 +66,8 @@ import kotlinx.coroutines.flow.onEach
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun DragDropSelectPointScreen() {
-    var isMapLoaded by rememberSaveable{ mutableStateOf(false) }
-    val dragDropAnimatable = remember { Animatable(Size.Zero,Size.VectorConverter) }
+    var isMapLoaded by rememberSaveable { mutableStateOf(false) }
+    val dragDropAnimatable = remember { Animatable(Size.Zero, Size.VectorConverter) }
     val cameraPositionState = rememberCameraPositionState()
     val locationState = rememberMarkerState()
     val viewModel: DragDropSelectPointViewModel = viewModel()
@@ -86,7 +86,7 @@ internal fun DragDropSelectPointScreen() {
 
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.onEach {
-            if(it is DragDropSelectPointContract.Effect.Toast) {
+            if (it is DragDropSelectPointContract.Effect.Toast) {
                 showToast(it.msg)
             }
         }.collect()
@@ -99,7 +99,7 @@ internal fun DragDropSelectPointScreen() {
     }
 
     LaunchedEffect(currentState.isOpenGps, reqGPSPermission.allPermissionsGranted) {
-        if(currentState.isOpenGps == true) {
+        if (currentState.isOpenGps == true) {
             if (!reqGPSPermission.allPermissionsGranted) {
                 reqGPSPermission.launchMultiplePermissionRequest()
             } else {
@@ -111,9 +111,9 @@ internal fun DragDropSelectPointScreen() {
     // 地图移动，中心的Marker需要动画跳动
     LaunchedEffect(cameraPositionState.isMoving) {
         if (cameraPositionState.isMoving) {
-            dragDropAnimatable.animateTo(Size(45F,20F))
+            dragDropAnimatable.animateTo(Size(45F, 20F))
         } else {
-            dragDropAnimatable.animateTo(Size(25F,11F))
+            dragDropAnimatable.animateTo(Size(25F, 11F))
             // 查询附近1000米地址数据
             viewModel.doSearchQueryPoi(cameraPositionState.position.target)
         }
@@ -121,12 +121,17 @@ internal fun DragDropSelectPointScreen() {
 
     LaunchedEffect(currentState.isClickForceStartLocation, currentState.currentLocation) {
         val curLocation = currentState.currentLocation
-        if(null == curLocation || cameraPositionState.position.target == curLocation) return@LaunchedEffect
+        if (null == curLocation || cameraPositionState.position.target == curLocation) return@LaunchedEffect
         locationState.position = curLocation
-        cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(currentState.currentLocation, 17F))
+        cameraPositionState.move(
+            CameraUpdateFactory.newLatLngZoom(
+                currentState.currentLocation,
+                17F
+            )
+        )
     }
 
-    if(currentState.isShowOpenGPSDialog) {
+    if (currentState.isShowOpenGPSDialog) {
         ShowOpenGPSDialog(
             onDismiss = viewModel::hideOpenGPSDialog,
             onPositiveClick = {
@@ -136,9 +141,11 @@ internal fun DragDropSelectPointScreen() {
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.5F)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5F)
+        ) {
             GDMap(
                 modifier = Modifier.matchParentSize(),
                 cameraPositionState = cameraPositionState,
@@ -149,16 +156,16 @@ internal fun DragDropSelectPointScreen() {
                 onMapLoaded = {
                     isMapLoaded = true
                 }
-            ){
+            ) {
                 Marker(
                     state = locationState,
-                    anchor = Offset(0.5F,0.5F),
+                    anchor = Offset(0.5F, 0.5F),
                     rotation = currentState.currentRotation,
-                    icon = BitmapDescriptorFactory.fromResource(com.melody.ui.components.R.drawable.ic_map_location_self),
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_location_self),
                     onClick = { true }
                 )
             }
-            if(isMapLoaded) {
+            if (isMapLoaded) {
                 // 地图加载出来之后，再显示出来选点的图标
                 UIMarkerInScreenCenter(R.drawable.purple_pin) {
                     dragDropAnimatable.value

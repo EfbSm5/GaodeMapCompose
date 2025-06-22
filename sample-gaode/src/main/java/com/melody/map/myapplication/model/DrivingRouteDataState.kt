@@ -49,7 +49,7 @@ class DrivingRouteDataState(
     val throughIcon: BitmapDescriptor?,
     val throughPointList: List<LatLonPoint>,
     val drivePathV2List: List<DrivePathV2>
-): BaseRouteDataState(
+) : BaseRouteDataState(
     routeWidth = routeWidth,
     startPos = startPos,
     targetPos = targetPos,

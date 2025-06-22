@@ -1,7 +1,7 @@
+import java.io.FileInputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Properties
-import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
@@ -36,13 +36,13 @@ android {
 
     signingConfigs {
         getByName("debug") {
-            storeFile = file(jksDir + keystoreProperties["storeFile"] as String)
+            storeFile = file(keystoreProperties["storeFile"] as String)
             storePassword = keystoreProperties["storePassword"] as String
             keyAlias = keystoreProperties["keyAlias"] as String
             keyPassword = keystoreProperties["keyPassword"] as String
         }
         create("release") {
-            storeFile = file(jksDir + keystoreProperties["storeFile"] as String)
+            storeFile = file(keystoreProperties["storeFile"] as String)
             storePassword = keystoreProperties["storePassword"] as String
             keyAlias = keystoreProperties["keyAlias"] as String
             keyPassword = keystoreProperties["keyPassword"] as String
@@ -96,8 +96,21 @@ android {
 }
 
 dependencies {
-    implementation(project(":sample-common"))
-    implementation(project(":sample-ui-components"))
-    implementation(project(":gd-map-compose"))
+    implementation("io.github.TheMelody:gd_compose:1.0.7")
     debugImplementation(libs.leakcanary.android)
+    implementation(platform(libs.compose.bom))
+    api(libs.androidx.runtime)
+    api(libs.core.ktx)
+    api(libs.lifecycle.runtime.ktx)
+    api(libs.lifecycle.viewmodel.compose)
+    api(libs.activity.compose)
+    api(libs.accompanist.permissions)
+    api(libs.startup.runtime)
+    implementation(platform(libs.compose.bom))
+    api(libs.compose.ui)
+    api(libs.compose.ui.tooling.preview)
+    api(libs.foundation)
+    api(libs.material)
+    api(libs.accompanist.flowlayout)
+    api(libs.accompanist.drawablepainter)
 }

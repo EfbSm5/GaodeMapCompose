@@ -31,9 +31,8 @@ import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.core.PoiItemV2
 import com.amap.api.services.poisearch.PoiResultV2
-import com.amap.api.services.poisearch.PoiSearch
 import com.amap.api.services.poisearch.PoiSearchV2
-import com.melody.sample.common.utils.SDKUtils
+import com.melody.map.myapplication.SDKUtils
 
 /**
  * DragDropSelectPointRepository
@@ -47,10 +46,14 @@ object DragDropSelectPointRepository {
     fun checkGPSIsOpen(): Boolean {
         val locationManager: LocationManager? = SDKUtils.getApplicationContext()
             .getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-        return locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER)?: false
+        return locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
     }
 
-    inline fun restartLocation(locationClient: AMapLocationClient?, listener: AMapLocationListener, block: (AMapLocationClient) -> Unit) {
+    inline fun restartLocation(
+        locationClient: AMapLocationClient?,
+        listener: AMapLocationListener,
+        block: (AMapLocationClient) -> Unit
+    ) {
         // 必须先停止，再重新初始化，否则会报错：【用户MD5安全码不通过】
         locationClient?.setLocationListener(null)
         locationClient?.stopLocation()
@@ -103,11 +106,16 @@ object DragDropSelectPointRepository {
     /**
      * 处理附件地址搜索完的数据
      */
-    fun handlePoiSearched(query: PoiSearchV2.Query?,poiResult: PoiResultV2?, resultCode: Int, block: (List<PoiItemV2>) -> Unit) {
+    fun handlePoiSearched(
+        query: PoiSearchV2.Query?,
+        poiResult: PoiResultV2?,
+        resultCode: Int,
+        block: (List<PoiItemV2>) -> Unit
+    ) {
         if (resultCode == AMapException.CODE_AMAP_SUCCESS) {
             if (poiResult?.query != null && poiResult.query == query) {
                 val poiItems = poiResult.pois
-                if (poiItems != null && poiItems.size > 0) {
+                if (poiItems != null && poiItems.isNotEmpty()) {
                     block.invoke(poiItems)
                     return
                 }

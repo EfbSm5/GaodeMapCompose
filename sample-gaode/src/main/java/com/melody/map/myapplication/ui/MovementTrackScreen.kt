@@ -36,8 +36,8 @@ import com.amap.api.maps.CameraUpdateFactory
 import com.melody.map.gd_compose.GDMap
 import com.melody.map.gd_compose.overlay.Polyline
 import com.melody.map.gd_compose.position.rememberCameraPositionState
+import com.melody.map.myapplication.ui.components.RedCenterLoading
 import com.melody.map.myapplication.viewmodel.MovementTrackViewModel
-import com.melody.ui.components.RedCenterLoading
 import kotlinx.coroutines.flow.filterNotNull
 
 /**
@@ -63,10 +63,10 @@ internal fun MovementTrackScreen() {
             cameraPositionState = cameraPositionState,
             uiSettings = currentState.uiSettings,
             onMapLoaded = viewModel::loadMovementTrackData
-        ){
+        ) {
             Polyline(points = currentState.latLngList, color = Color(0xFFF38D0F))
         }
-        if(currentState.isLoading) {
+        if (currentState.isLoading) {
             RedCenterLoading()
         }
     }

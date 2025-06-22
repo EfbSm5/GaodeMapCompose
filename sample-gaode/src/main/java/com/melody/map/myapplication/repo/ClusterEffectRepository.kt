@@ -22,7 +22,6 @@
 
 package com.melody.map.myapplication.repo
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -38,8 +37,9 @@ import com.amap.api.maps.model.LatLngBounds
 import com.melody.map.gd_compose.model.ClusterItem
 import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.myapplication.R
+import com.melody.map.myapplication.SDKUtils
 import com.melody.map.myapplication.model.RegionItem
-import com.melody.sample.common.utils.SDKUtils
+import androidx.core.graphics.createBitmap
 
 /**
  * ClusterEffectRepository
@@ -59,7 +59,7 @@ object ClusterEffectRepository {
         )
     }
 
-    fun initClusterDataList(centerLatLng: LatLng):List<ClusterItem> {
+    fun initClusterDataList(centerLatLng: LatLng): List<ClusterItem> {
         val items: MutableList<ClusterItem> = mutableListOf()
         //随机10000个点
         for (i in 0..9999) {
@@ -85,7 +85,10 @@ object ClusterEffectRepository {
 
     fun getDefaultClusterIcon(): BitmapDescriptor {
         return BitmapDescriptorFactory.fromBitmap(
-            BitmapFactory.decodeResource(SDKUtils.getApplicationContext().resources,R.drawable.ic_defaultcluster)
+            BitmapFactory.decodeResource(
+                SDKUtils.getApplicationContext().resources,
+                R.drawable.ic_defaultcluster
+            )
         )
     }
 
@@ -145,10 +148,7 @@ object ClusterEffectRepository {
     }
 
     fun drawCircle(radius: Int, color: Int): Bitmap? {
-        val bitmap = Bitmap.createBitmap(
-            radius * 2, radius * 2,
-            Bitmap.Config.ARGB_8888
-        )
+        val bitmap = createBitmap(radius * 2, radius * 2)
         val canvas = Canvas(bitmap)
         val paint = Paint()
         val rectF = RectF(0f, 0f, (radius * 2).toFloat(), (radius * 2).toFloat())

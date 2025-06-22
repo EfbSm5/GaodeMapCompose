@@ -46,7 +46,7 @@ class BusRouteDataState(
     val busLineSelectedTexture: BitmapDescriptor?,
     val busLineUnSelectedTexture: BitmapDescriptor?,
     val busPathV2List: List<BusPathV2>
-): BaseRouteDataState(
+) : BaseRouteDataState(
     routeWidth = routeWidth,
     startPos = startPos,
     targetPos = targetPos,

@@ -23,14 +23,12 @@
 package com.melody.map.myapplication.contract
 
 import com.amap.api.maps.model.BitmapDescriptor
-import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.LatLngBounds
 import com.melody.map.gd_compose.model.ClusterItem
-import com.melody.map.gd_compose.model.ClusterRender
 import com.melody.map.gd_compose.poperties.MapUiSettings
-import com.melody.sample.common.state.IUiEffect
-import com.melody.sample.common.state.IUiEvent
-import com.melody.sample.common.state.IUiState
+import com.melody.map.myapplication.state.IUiEffect
+import com.melody.map.myapplication.state.IUiEvent
+import com.melody.map.myapplication.state.IUiState
 
 /**
  * ClusterEffectContract
@@ -41,7 +39,7 @@ import com.melody.sample.common.state.IUiState
  */
 class ClusterEffectContract {
     sealed class Event : IUiEvent {
-        data class ClusterItemClick(val list: List<ClusterItem>): Event()
+        data class ClusterItemClick(val list: List<ClusterItem>) : Event()
     }
 
     data class State(

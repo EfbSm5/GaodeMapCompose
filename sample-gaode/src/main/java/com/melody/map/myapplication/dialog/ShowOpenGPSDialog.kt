@@ -25,7 +25,7 @@ package com.melody.map.myapplication.dialog
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.melody.map.myapplication.R
-import com.melody.ui.components.SimpleDialog
+import com.melody.map.myapplication.ui.components.SimpleDialog
 
 /**
  * ShowOpenGPSDialog

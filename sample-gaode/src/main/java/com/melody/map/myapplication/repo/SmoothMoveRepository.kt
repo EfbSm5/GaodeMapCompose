@@ -30,7 +30,7 @@ import com.amap.api.maps.model.LatLngBounds
 import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.gd_compose.utils.PathSmoothTool
 import com.melody.map.myapplication.R
-import com.melody.sample.common.utils.SDKUtils
+import com.melody.map.myapplication.SDKUtils
 
 /**
  * SmoothMoveRepository
@@ -226,7 +226,8 @@ object SmoothMoveRepository {
     fun getPolylineTextureBitmap(): BitmapDescriptor? {
         val result = kotlin.runCatching {
             val assetsStream = SDKUtils.getApplicationContext().assets.open("custtexture.png")
-            val textureBitmap = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeStream(assetsStream))
+            val textureBitmap =
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeStream(assetsStream))
             assetsStream.close()
             textureBitmap
         }
@@ -237,12 +238,12 @@ object SmoothMoveRepository {
         return BitmapDescriptorFactory.fromBitmap(
             BitmapFactory.decodeResource(
                 SDKUtils.getApplicationContext().resources,
-                com.melody.ui.components.R.drawable.ic_map_red_car
+                R.drawable.ic_map_red_car
             )
         )
     }
 
-    fun initMapUiSettings() :MapUiSettings{
+    fun initMapUiSettings(): MapUiSettings {
         return MapUiSettings(
             isZoomEnabled = true,
             isScrollGesturesEnabled = true,

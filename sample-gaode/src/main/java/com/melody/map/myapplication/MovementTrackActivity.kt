@@ -34,7 +34,7 @@ import com.melody.map.myapplication.ui.MovementTrackScreen
  * @github: https://github.com/TheMelody/OmniMap
  * created 2022/10/22 14:49
  */
-class MovementTrackActivity : ComponentActivity(){
+class MovementTrackActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

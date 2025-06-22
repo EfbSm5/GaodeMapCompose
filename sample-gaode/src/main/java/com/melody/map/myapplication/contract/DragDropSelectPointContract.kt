@@ -24,9 +24,9 @@ package com.melody.map.myapplication.contract
 
 import com.amap.api.maps.model.LatLng
 import com.amap.api.services.core.PoiItemV2
-import com.melody.sample.common.state.IUiEffect
-import com.melody.sample.common.state.IUiEvent
-import com.melody.sample.common.state.IUiState
+import com.melody.map.myapplication.state.IUiEffect
+import com.melody.map.myapplication.state.IUiEvent
+import com.melody.map.myapplication.state.IUiState
 
 /**
  * DragDropSelectPointContract

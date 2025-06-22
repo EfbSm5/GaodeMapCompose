@@ -7,8 +7,12 @@ import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MultiPointItem
 import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.myapplication.R
-import com.melody.sample.common.utils.SDKUtils
-import java.io.*
+import com.melody.map.myapplication.SDKUtils
+import java.io.BufferedReader
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
 
 /**
  * MultiPointOverlayRepository
@@ -19,7 +23,7 @@ import java.io.*
  */
 object MultiPointOverlayRepository {
 
-    fun initMapUiSettings() : MapUiSettings {
+    fun initMapUiSettings(): MapUiSettings {
         return MapUiSettings(
             isZoomEnabled = true,
             isScrollGesturesEnabled = true,
@@ -30,11 +34,14 @@ object MultiPointOverlayRepository {
 
     fun initMultiPointIcon(): BitmapDescriptor {
         return BitmapDescriptorFactory.fromBitmap(
-            BitmapFactory.decodeResource(SDKUtils.getApplicationContext().resources,R.drawable.multi_point_blue)
+            BitmapFactory.decodeResource(
+                SDKUtils.getApplicationContext().resources,
+                R.drawable.multi_point_blue
+            )
         )
     }
 
-    fun initMultiPointItemList() : List<MultiPointItem> {
+    fun initMultiPointItemList(): List<MultiPointItem> {
         val list: MutableList<MultiPointItem> = mutableListOf()
         val outputStream: FileOutputStream? = null
         var inputStream: InputStream? = null

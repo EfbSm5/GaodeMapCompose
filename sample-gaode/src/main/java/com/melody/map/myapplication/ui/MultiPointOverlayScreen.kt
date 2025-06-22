@@ -35,8 +35,8 @@ import com.melody.map.gd_compose.overlay.Marker
 import com.melody.map.gd_compose.overlay.MultiPointOverlay
 import com.melody.map.gd_compose.overlay.rememberMarkerState
 import com.melody.map.gd_compose.position.rememberCameraPositionState
+import com.melody.map.myapplication.ui.components.RedCenterLoading
 import com.melody.map.myapplication.viewmodel.MultiPointOverlayViewModel
-import com.melody.ui.components.RedCenterLoading
 import kotlinx.coroutines.flow.filterNotNull
 
 /**
@@ -55,7 +55,8 @@ internal fun MultiPointOverlayScreen() {
         position = CameraPosition(LatLng(39.91, 116.40), 3F, 0f, 0f)
     }
     LaunchedEffect(Unit) {
-        snapshotFlow { currentState.clickPointLatLng }.filterNotNull().collect { markerState.position = it }
+        snapshotFlow { currentState.clickPointLatLng }.filterNotNull()
+            .collect { markerState.position = it }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -78,7 +79,7 @@ internal fun MultiPointOverlayScreen() {
                 isClickable = false
             )
         }
-        if(currentState.isLoading) {
+        if (currentState.isLoading) {
             RedCenterLoading()
         }
     }

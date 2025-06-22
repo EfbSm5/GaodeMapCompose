@@ -26,9 +26,9 @@ import com.amap.api.maps.model.LatLng
 import com.melody.map.gd_compose.poperties.MapProperties
 import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.myapplication.model.BaseRouteDataState
-import com.melody.sample.common.state.IUiEffect
-import com.melody.sample.common.state.IUiEvent
-import com.melody.sample.common.state.IUiState
+import com.melody.map.myapplication.state.IUiEffect
+import com.melody.map.myapplication.state.IUiEvent
+import com.melody.map.myapplication.state.IUiState
 
 /**
  * RoutePlanContract
@@ -40,11 +40,11 @@ import com.melody.sample.common.state.IUiState
 class RoutePlanContract {
 
     sealed class Event : IUiEvent {
-        object RoadTrafficClick: Event()
-        data class QueryRoutePlan(val queryType: Int): Event()
+        object RoadTrafficClick : Event()
+        data class QueryRoutePlan(val queryType: Int) : Event()
     }
 
-    data class State (
+    data class State(
         val isLoading: Boolean,
         val queryStartPoint: LatLng,
         val queryEndPoint: LatLng,
@@ -54,7 +54,7 @@ class RoutePlanContract {
     ) : IUiState
 
     sealed class Effect : IUiEffect {
-        internal class Toast(val msg: String?): Effect()
+        internal class Toast(val msg: String?) : Effect()
     }
 }
 

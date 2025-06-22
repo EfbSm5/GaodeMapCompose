@@ -34,7 +34,7 @@ import com.melody.map.myapplication.ui.RoutePlanScreen
  * @github: https://github.com/TheMelody/OmniMap
  * created 2022/10/13 11:54
  */
-class RoutePlanActivity: ComponentActivity() {
+class RoutePlanActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

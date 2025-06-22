@@ -46,7 +46,13 @@ import com.melody.map.myapplication.repo.MainRepository
 @Composable
 internal fun MainScreen() {
     val featureItems = stringArrayResource(id = R.array.main_feature_items)
-    FlowRow(modifier = Modifier.padding(15.dp).fillMaxSize(), mainAxisSpacing = 15.dp, crossAxisSpacing = 10.dp) {
+    FlowRow(
+        modifier = Modifier
+            .padding(15.dp)
+            .fillMaxSize(),
+        mainAxisSpacing = 15.dp,
+        crossAxisSpacing = 10.dp
+    ) {
         featureItems.forEach {
             FeatureItemContent(item = it) {
                 MainRepository.handleMainFeatureItemClick(it)

@@ -24,8 +24,16 @@ package com.melody.map.myapplication.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,15 +47,15 @@ import com.melody.map.myapplication.model.BusRouteDataState
 import com.melody.map.myapplication.model.DrivingRouteDataState
 import com.melody.map.myapplication.model.RideRouteDataState
 import com.melody.map.myapplication.model.WalkRouteDataState
+import com.melody.map.myapplication.showToast
+import com.melody.map.myapplication.ui.components.MapMenuButton
+import com.melody.map.myapplication.ui.components.RedCenterLoading
+import com.melody.map.myapplication.ui.components.RoadTrafficSwitch
 import com.melody.map.myapplication.ui.route.BusRouteOverlayContent
 import com.melody.map.myapplication.ui.route.DrivingRouteOverlayContent
 import com.melody.map.myapplication.ui.route.RideRouteOverlayContent
 import com.melody.map.myapplication.ui.route.WalkRouteOverlayContent
 import com.melody.map.myapplication.viewmodel.RoutePlanViewModel
-import com.melody.sample.common.utils.showToast
-import com.melody.ui.components.MapMenuButton
-import com.melody.ui.components.RedCenterLoading
-import com.melody.ui.components.RoadTrafficSwitch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
@@ -66,7 +74,7 @@ internal fun RoutePlanScreen() {
 
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.onEach {
-            if(it is RoutePlanContract.Effect.Toast) {
+            if (it is RoutePlanContract.Effect.Toast) {
                 showToast(it.msg)
             }
         }.collect()
@@ -80,18 +88,21 @@ internal fun RoutePlanScreen() {
             uiSettings = currentState.uiSettings,
             onMapLoaded = viewModel::queryRoutePlan
         ) {
-            if(!currentState.isLoading) {
+            if (!currentState.isLoading) {
                 currentState.dataState?.apply {
                     when (this) {
                         is DrivingRouteDataState -> {
                             DrivingRouteOverlayContent(data = this)
                         }
+
                         is BusRouteDataState -> {
                             BusRouteOverlayContent(data = this)
                         }
+
                         is WalkRouteDataState -> {
                             WalkRouteOverlayContent(data = this)
                         }
+
                         is RideRouteDataState -> {
                             RideRouteOverlayContent(data = this)
                         }
@@ -99,7 +110,7 @@ internal fun RoutePlanScreen() {
                 }
             }
         }
-        if(currentState.isLoading) {
+        if (currentState.isLoading) {
             RedCenterLoading()
         }
         MenuButtonList(viewModel::queryRoutePlan)
@@ -114,11 +125,12 @@ internal fun RoutePlanScreen() {
 }
 
 @Composable
-private fun BoxScope.MenuButtonList(onClick:(Int) -> Unit) {
+private fun BoxScope.MenuButtonList(onClick: (Int) -> Unit) {
     val currentOnClick by rememberUpdatedState(newValue = onClick)
     FlowRow(
         modifier = Modifier
-            .align(Alignment.TopCenter).fillMaxWidth()
+            .align(Alignment.TopCenter)
+            .fillMaxWidth()
             .background(Color.Black.copy(alpha = 0.3F))
     ) {
         MapMenuButton(text = "驾车", onClick = { currentOnClick.invoke(0) })

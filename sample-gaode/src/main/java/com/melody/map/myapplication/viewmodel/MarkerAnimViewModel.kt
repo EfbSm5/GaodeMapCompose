@@ -23,9 +23,9 @@
 package com.melody.map.myapplication.viewmodel
 
 import com.amap.api.maps.model.LatLng
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.MarkerAnimContract
 import com.melody.map.myapplication.repo.MarkerAnimRepository
-import com.melody.sample.common.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -35,7 +35,8 @@ import kotlinx.coroutines.Dispatchers
  * @github: https://github.com/TheMelody/OmniMap
  * created 2022/10/21 15:48
  */
-class MarkerAnimViewModel: BaseViewModel<MarkerAnimContract.Event,MarkerAnimContract.State,MarkerAnimContract.Effect>() {
+class MarkerAnimViewModel :
+    BaseViewModel<MarkerAnimContract.Event, MarkerAnimContract.State, MarkerAnimContract.Effect>() {
     override fun createInitialState(): MarkerAnimContract.State {
         return MarkerAnimContract.State(
             isLoading = true,

@@ -4,7 +4,7 @@ import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.LatLngBounds
 import com.melody.map.gd_compose.poperties.MapUiSettings
 import com.melody.map.gd_compose.utils.PathSmoothTool
-import com.melody.sample.common.utils.SDKUtils
+import com.melody.map.myapplication.SDKUtils
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
@@ -37,9 +37,10 @@ object MovementTrackRepository {
             input = SDKUtils.getApplicationContext().assets.open(filePath)
             inputReader = InputStreamReader(input)
             bufReader = BufferedReader(inputReader)
-            var line:String?
+            var line: String?
             while (bufReader.readLine().also { line = it } != null) {
-                val strArray: Array<String>? = line?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+                val strArray: Array<String>? =
+                    line?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
                 if (null != strArray) {
                     val newpoint = LatLng(strArray[0].toDouble(), strArray[1].toDouble())
                     if (locLists.size == 0 || newpoint.toString() !== locLists[locLists.size - 1].toString()) {

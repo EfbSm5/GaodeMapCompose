@@ -22,9 +22,9 @@
 
 package com.melody.map.myapplication.viewmodel
 
+import com.melody.map.myapplication.base.BaseViewModel
 import com.melody.map.myapplication.contract.MovementTrackContract
 import com.melody.map.myapplication.repo.MovementTrackRepository
-import com.melody.sample.common.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 
 /**

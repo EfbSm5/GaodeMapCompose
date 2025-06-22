@@ -43,13 +43,13 @@ import com.melody.map.myapplication.model.BaseRouteDataState
 internal fun StartAndTargetPosMarker(data: BaseRouteDataState) {
     NoFocusMarker(
         zIndex = 1F,
-        anchor = Offset(0.5F,1F),
+        anchor = Offset(0.5F, 1F),
         state = rememberMarkerState(position = data.startPos),
         icon = data.startMarkerIcon
     )
     NoFocusMarker(
         zIndex = 1F,
-        anchor = Offset(0.5F,1F),
+        anchor = Offset(0.5F, 1F),
         state = rememberMarkerState(position = data.targetPos),
         icon = data.endMarkerIcon
     )

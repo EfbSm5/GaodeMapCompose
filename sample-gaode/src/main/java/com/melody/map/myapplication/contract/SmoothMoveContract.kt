@@ -26,9 +26,9 @@ import com.amap.api.maps.model.BitmapDescriptor
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.LatLngBounds
 import com.melody.map.gd_compose.poperties.MapUiSettings
-import com.melody.sample.common.state.IUiEffect
-import com.melody.sample.common.state.IUiEvent
-import com.melody.sample.common.state.IUiState
+import com.melody.map.myapplication.state.IUiEffect
+import com.melody.map.myapplication.state.IUiEvent
+import com.melody.map.myapplication.state.IUiState
 
 /**
  * SmoothMoveContract
@@ -39,10 +39,10 @@ import com.melody.sample.common.state.IUiState
  */
 class SmoothMoveContract {
     sealed class Event : IUiEvent {
-        object PlayPauseEvent: Event()
+        object PlayPauseEvent : Event()
     }
 
-    data class State (
+    data class State(
         val isStart: Boolean,
         val isMapLoaded: Boolean,
         val trackPoints: List<LatLng>?,
@@ -54,6 +54,6 @@ class SmoothMoveContract {
     ) : IUiState
 
     sealed class Effect : IUiEffect {
-        internal class Toast(val msg: String): Effect()
+        internal class Toast(val msg: String) : Effect()
     }
 }
