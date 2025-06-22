@@ -1,3 +1,9 @@
+基于omni map进行修改，实现一些自己需要的功能
+
+
+
+
+
 OmniMap Compose 🗺
 ===============
 <a href="https://github.com/TheMelody/OmniMap-Compose/blob/main/LICENSE"><img alt="LICENSE" src="https://img.shields.io/github/license/TheMelody/OmniMap-Compose"/></a>  <img alt="issues" src="https://img.shields.io/github/issues/TheMelody/OmniMap-Compose?color=important"/>  <img alt="forks" src="https://img.shields.io/github/forks/TheMelody/OmniMap-Compose?color=blueviolet"/>  <img alt="stars" src="https://img.shields.io/github/stars/TheMelody/OmniMap-Compose?color=success"/>  <a href="https://xiaozhuanlan.com/u/halifax" target="blank"><img alt="小专栏" src="https://img.shields.io/badge/%E5%B0%8F%E4%B8%93%E6%A0%8F-ff7055" ></a>  <a href="https://juejin.cn/user/8451824316670/posts" target="blank"><img alt="稀土掘金" src="https://img.shields.io/badge/%E7%A8%80%E5%9C%9F%E6%8E%98%E9%87%91-%231e80FF" ></a>  <a href="https://www.zhihu.com/people/fq_halifax" target="blank"><img src="https://img.shields.io/badge/%E7%9F%A5%E4%B9%8E-1772F6" alt="知乎"></a>  <a href="https://blog.csdn.net/logicsboy" target="blank"><img src="https://img.shields.io/badge/CSDN-FC5531" alt="CSDN"></a>
