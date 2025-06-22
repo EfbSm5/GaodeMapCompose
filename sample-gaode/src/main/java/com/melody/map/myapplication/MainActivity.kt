@@ -29,7 +29,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import com.melody.map.myapplication.ui.MainScreen
+import com.melody.map.myapplication.ui.DragDropSelectPointScreen
+import com.melody.map.myapplication.ui.LocationTrackingScreen
+import com.melody.map.myapplication.ui.MultiPointOverlayScreen
+import com.melody.map.myapplication.ui.RoutePlanScreen
 
 /**
  * MainActivity
@@ -46,7 +49,10 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colors.background
             ) {
-                MainScreen()
+                DragDropSelectPointScreen()
+                LocationTrackingScreen()
+                MultiPointOverlayScreen()
+                RoutePlanScreen()
             }
         }
     }
